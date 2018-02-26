@@ -19,7 +19,7 @@ Marketing questions like what percentage of our users visited our publisher netw
 
 When your daily traffic consists of tens of millions of users, computing this statistic using your company's database is a nightmare. Not even a Spark cluster can handle daily visits for a month of data without taking days to spit out an answer.
 
-A way to understand the difference between decisions and not predictions is to think about about examples like 
+A way to understand the difference between decisions and not predictions is to think about examples like 
 * I don't have to outrun the bear, just you.
 * Top candidate needs to be selected
 
