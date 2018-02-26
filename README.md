@@ -1,5 +1,6 @@
 # Ground Truth Problems in Business
 Collection of papers and presentations related to ground truth inference in data science
+![Flammarion engraving](img/Flammarion.jpg)
 
 The Flammarion engraving is frequently taken as a metaphor for piercing the veil of reality to understand what is really going on. The engraving also illustrates the goal of solving *ground truth problems* in business. In your company the ground truth of the production data stream may not be known. Or it could be hard to compute. Or private.
 
