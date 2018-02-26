@@ -28,5 +28,9 @@ The above examples are connected to the issue of precision versus accuracy error
 Another theme that comes up in ground truth problems is the distinction between accuracy and precision error. You have experienced this if you have tweaked a zeroing screw on a mechanical weight scale or used the focus on your camera. Accuracy is cheap and easy. Precision, as in good quality lenses that perform uniformly over the whole view field, is expensive. So, while ground truth inference algorithms cannot frequently measure your accuracy error, they can measure your precision error. Hence they give you insight on the hardest quality measurement of your company's product - its precision.
 
 ## Papers
+### Ground truth inference in regression tasks
 The following paper was my initial foray into this problem. It considers how to figure out the precision error that multiple maps of the ground (literally!) are making. In hindsight, it solves a ground truth inference problem for the regression task.
 [Autonomous Geometric Precision Error Estimation in Low-Level Computer Vision Tasks](http://icml2008.cs.helsinki.fi/papers/121.pdf)
+### Ground truth inference for a statistical Unique ID system
+This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company that sells a unique ID for Internet users. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
+[Algebra of Ground Truth Inference for Web Unique Identifiers](./papers/bc-id-ground-truth-wsdm-2015.pdf)
