@@ -8,9 +8,9 @@ This collection contains examples of my work that solve the ground truth inferen
 
 The term *ground truth* sounds fancy and philosophical but it is not. It actually is easy to understand and it is just a generic term for the different forms it takes. Let's take one case I discuss here - binary classification. You have a bunch of data and each of your data points has an "A" or "B" label. The ground truth for that data would be the list of the true labels for each of the data points,
 <a href="https://www.codecogs.com/eqnedit.php?latex=\{\ell_{i,\text{true}}\}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\{\ell_{i,\text{true}}\}" title="\{\ell_{i,\text{true}}\}" /></a>.
-Another example would be a company that sells speech recognition as a service to call centers. Ground truth would be the transcripts for all the audio it processed daily in production.
+Another example would be a company that sells speech recognition as a service to call centers. Ground truth could be the transcripts for all the audio it processed daily in production.
 
-The way to get around the problem of not having ground truth is to realize that for most business decisions the role of ground truth is to allow a statistic of ground truth to be computed. So if you can estimate the statistic directly, you eliminate the problem of not having the ground truth.
+The way to get around the problem of not having ground truth is to realize that, for most business decisions, the role of ground truth is to allow a statistic of ground truth to be computed! Ground truth is used to comput the statistic and the "discarded"! So if you can estimate the statistic directly, you eliminate the problem of not having the ground truth.
 
 ## Decisions not Predictions
 Business decisions are frequently driven by average or SLA performance. Not all output is expected to be perfect and statistics of the data are used to specify SLA agreements. The most accurate algorithm is measured in the aggregate with decision makers not wanting to get into the details of the performance. I never attended a meeting during my days in speech recognition where Word Error Rate (WER) was not the only metric used to select best production algorithm after all other engineering constraints were satisfied.
