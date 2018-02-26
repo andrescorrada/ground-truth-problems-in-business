@@ -22,6 +22,7 @@ When your daily traffic consists of tens of millions of users, computing this st
 A way to understand the difference between decisions and not predictions is to think about about examples like 
 * I don't have to outrun the bear, just you.
 * Top candidate needs to be selected
+
 The above examples are connected to the issue of precision versus accuracy error in ground truth problems.
 ## Precision is expensive, accuracy is not
-Another theme that comes up in ground truth problems is the distinction between accuracy and precision error. You have experienced this if you have tweaked a zeroing screw on a mechanical weight scale or used the focus on your camera. Accuracy is cheap and easy. Precision, good quality lenses that perform uniformly over the whole view field, is expensive. So, while ground truth inference algorithms cannot frequently measure your accuracy error, they can measure your precision error. Hence they give you insight on the hardest quality measurement of your company's product - its precision.
+Another theme that comes up in ground truth problems is the distinction between accuracy and precision error. You have experienced this if you have tweaked a zeroing screw on a mechanical weight scale or used the focus on your camera. Accuracy is cheap and easy. Precision, as in good quality lenses that perform uniformly over the whole view field, is expensive. So, while ground truth inference algorithms cannot frequently measure your accuracy error, they can measure your precision error. Hence they give you insight on the hardest quality measurement of your company's product - its precision.
