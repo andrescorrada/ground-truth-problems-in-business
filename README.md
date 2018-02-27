@@ -33,9 +33,9 @@ HyperLogLog is a data streaming algorithm typically used to estimate the number 
 
 The [Time In Ad-Tech Data Flows](presentations/TimeInAdTechDataFlows.pptx) talk I gave 2015 at DataXu discusses how you can use HyperLogLog to measure the time dynamics of data in a very large industrial database. HyperLogLog makes possible measurements extending over three or four months of data that would be incredibly expensive (in time and memory!) to calculate exactly with a formal SQL query.
 ## Papers
-### Ground truth inference in regression tasks
-The following paper was my initial foray into this problem. It considers how to figure out the precision error that multiple maps of the ground (literally!) are making. In hindsight, it solves a ground truth inference problem for the regression task.
+### When ground truth is unavailable - precision of aerial mappers without knowing the ground truth (literally!)
+The following paper was my initial foray into this problem. It considers how to figure out the precision error that multiple maps of the ground are making. In hindsight, you could use the same algebraic set-up of the problem for figuring out the precision error of a collection of regressors. This work is notable in that it solves the problem even when the regressors are correlated using ideas from compressed sensing. It is a rare algorithm in the field of ground truth inference that can deal with correlated decision makers.
 [Autonomous Geometric Precision Error Estimation in Low-Level Computer Vision Tasks](http://icml2008.cs.helsinki.fi/papers/121.pdf)
-### Ground truth inference for a statistical Unique ID system
-This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company that sells a unique ID for Internet users. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
+### When ground truth is private - accuracy of a statistical Unique ID system without knowing the identity of the users
+This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company that sells a unique ID service. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
 [Algebra of Ground Truth Inference for Web Unique Identifiers](./papers/bc-id-ground-truth-wsdm-2015.pdf)
