@@ -27,6 +27,11 @@ The above examples are connected to the issue of precision versus accuracy error
 ## Precision is expensive, accuracy is not
 Another theme that comes up in ground truth problems is the distinction between accuracy and precision error. You have experienced this if you have tweaked a zeroing screw on a mechanical weight scale or used the focus on your camera. Accuracy is cheap and easy. Precision, as in good quality lenses that perform uniformly over the whole view field, is expensive. So, while ground truth inference algorithms cannot frequently measure your accuracy error, they can measure your precision error. Hence they give you insight on the hardest quality measurement of your company's product - its precision.
 
+## Presentations
+### When ground truth is expensive to compute
+HyperLogLog is a data streaming algorithm typically used to estimate the number of uniques in a collection. Data stream algorithms are inference algorithms that refuse to store the ground truth. This has the nice side-effect that it makes them private. In the case of HyperLogLog, you can find out the number of uniques in a set without knowing any of the ids for the unique objects in the collection. 
+
+The [Time In Ad-Tech Data Flows](presentations/TimeInAdTechDataFlows.pptx) talk I gave 2015 at DataXu discusses how you can use HyperLogLog to measure the time dynamics of data in a very large industrial database. HyperLogLog makes possible measurements extending over three or four months of data that would be incredibly expensive (in time and memory!) to calculate exactly with a formal SQL query.
 ## Papers
 ### Ground truth inference in regression tasks
 The following paper was my initial foray into this problem. It considers how to figure out the precision error that multiple maps of the ground (literally!) are making. In hindsight, it solves a ground truth inference problem for the regression task.
