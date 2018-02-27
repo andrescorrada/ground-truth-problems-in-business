@@ -1,0 +1,323 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11927,        315]
+NotebookOptionsPosition[     10732,        285]
+NotebookOutlinePosition[     11091,        301]
+CellTagsIndexPosition[     11048,        298]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Ground truth inference of binary classifier accuracies - the independent \
+classifiers case\
+\>", "Title",
+ CellChangeTimes->{{3.728719115572504*^9, 
+  3.728719139020281*^9}},ExpressionUUID->"14225361-ce96-42f6-b937-\
+a22e7ac62a44"],
+
+Cell["\<\
+The accuracy of binary classifiers can be estimated exactly without knowing \
+the true labels for the classifier decisions. Three independent classifiers \
+are sufficient. This notebook demonstrates the above claims by construction.
+
+The method proposed here is algebraic as opposed to the maximum-likelihood \
+methods commonly seen in ground truth inference algorithms. This approach has \
+been patented by Data Engines Corporation.\
+\>", "Text",
+ CellChangeTimes->{{3.7287191475878773`*^9, 3.728719343213501*^9}, {
+  3.728719375976676*^9, 3.72871937754132*^9}, {3.728720624347883*^9, 
+  3.728720631119725*^9}},ExpressionUUID->"bfdc43c7-1587-4d3a-b751-\
+701d8675502a"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The Polynomial System - Algebra of Error for Independent Binary Classifiers\
+\>", "Section",
+ CellChangeTimes->{{3.7287194179524193`*^9, 3.728719429143127*^9}, {
+  3.728719598370187*^9, 
+  3.7287196145450583`*^9}},ExpressionUUID->"de6714f4-5fc7-4b18-823f-\
+2d114245ed5d"],
+
+Cell[TextData[{
+ "The following set of quartic polynomials define algebraic system that must \
+be solved to estimate the accuracy of three classifiers as well as the true \
+prevalance of the labels. There are 8 = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["2", "3"], " "}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a0e136e1-0cda-433f-b3ef-c32da5eead07"],
+ "polynomials, one for each of the possible voting pattern of three \
+classifiers doing binary label classification."
+}], "Text",
+ CellChangeTimes->{{3.728719439558942*^9, 
+  3.728719593425003*^9}},ExpressionUUID->"c2474e92-5be1-4c55-a3c2-\
+a36edd540205"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Alpha]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Beta]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Alpha]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Beta]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Alpha]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Beta]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Alpha]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Beta]"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["P", "\[Alpha]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Alpha]"}]]}], "+", 
+     RowBox[{
+      SubscriptBox["P", "\[Beta]"], " ", 
+      SubscriptBox["P", 
+       RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+      SubscriptBox["P", 
+       RowBox[{"3", ",", "\[Beta]", ",", "\[Beta]"}]]}]}]}]}], "}"}]], "Input",\
+ExpressionUUID->"21e705a5-f166-43ac-8515-daf863742383"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Ground Truth and the Inference Problem", "Section",
+ CellChangeTimes->{{3.7287196314578247`*^9, 
+  3.7287196407762814`*^9}},ExpressionUUID->"215da9fc-dbc9-447e-ab98-\
+01a6708742af"],
+
+Cell["\<\
+In classification problems, the ground truth is the correct label for each \
+data point in a dataset. The statistics of ground truth solved by the above \
+polynomial system are:
+- the prevalence of the labels.
+- the accuracies of the classifiers for each label.\
+\>", "Text",
+ CellChangeTimes->{{3.728719645167714*^9, 
+  3.728719743893866*^9}},ExpressionUUID->"6f1f11fc-c1ce-46a1-a1aa-\
+8f374ef895d8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exact Solution for Three Independent Binary Classifiers", "Section",
+ CellChangeTimes->{{3.728719761670669*^9, 
+  3.728719773508862*^9}},ExpressionUUID->"24b707b1-63c5-4f03-b1ef-\
+d11594341964"],
+
+Cell["\<\
+The above polynomial can be solved exactly for the unknown ground truth \
+statistics given the tally of voting patters by the three classifiers.
+The solution for the prevalence is a quadratic equation for the prevalence \
+of, say, label A and complicated coefficients based on the 8 voting pattern \
+frequencies of the three classifiers over the dataset.
+This means that there are two solutions for prevalence - x% or (1-x)%. \
+Likewise for the accuracies of the classifiers, although there there is a \
+symmetry between the accuracies for both labels.
+This illustrates, in the case of classification tasks, the difference between \
+accuracy and precision. Curating a very small subset of the target dataset \
+immediately establishes the correct solution. Accuracy is cheap, precision is \
+expensive.\[LineSeparator]In general, these polynomial systems are solved \
+using ideas from algebraic geometry such as a Groebner basis and Buchberger\
+\[CloseCurlyQuote]s algorithm.\
+\>", "Text",
+ CellChangeTimes->{{3.7287197859808083`*^9, 
+  3.72872017175286*^9}},ExpressionUUID->"1f6b19e0-61e3-459d-ab19-\
+6bf7eb88bc3f"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 690},
+WindowMargins->{{12, Automatic}, {Automatic, 24}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 242, 6, 222, "Title",ExpressionUUID->"14225361-ce96-42f6-b937-a22e7ac62a44"],
+Cell[825, 30, 679, 12, 150, "Text",ExpressionUUID->"bfdc43c7-1587-4d3a-b751-701d8675502a"],
+Cell[CellGroupData[{
+Cell[1529, 46, 281, 6, 105, "Section",ExpressionUUID->"de6714f4-5fc7-4b18-823f-2d114245ed5d"],
+Cell[1813, 54, 657, 15, 81, "Text",ExpressionUUID->"c2474e92-5be1-4c55-a3c2-a36edd540205"],
+Cell[2473, 71, 6225, 163, 194, "Input",ExpressionUUID->"21e705a5-f166-43ac-8515-daf863742383"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8735, 239, 191, 3, 67, "Section",ExpressionUUID->"215da9fc-dbc9-447e-ab98-01a6708742af"],
+Cell[8929, 244, 411, 9, 104, "Text",ExpressionUUID->"6f1f11fc-c1ce-46a1-a1aa-8f374ef895d8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9377, 258, 200, 3, 67, "Section",ExpressionUUID->"24b707b1-63c5-4f03-b1ef-d11594341964"],
+Cell[9580, 263, 1124, 18, 265, "Text",ExpressionUUID->"1f6b19e0-61e3-459d-ab19-6bf7eb88bc3f"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

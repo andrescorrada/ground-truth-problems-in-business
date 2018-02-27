@@ -39,3 +39,7 @@ The following paper was my initial foray into this problem. It considers how to 
 ### When ground truth is private - accuracy of a statistical Unique ID system without knowing the identity of the users
 This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company that sells a unique ID service. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
 [Algebra of Ground Truth Inference for Web Unique Identifiers](./papers/bc-id-ground-truth-wsdm-2015.pdf)
+
+## Technology
+Data Engines Corporation owns the patent to a polynomial method for measuring the accuracy of binary classifiers when correct labels are unavailable. [Independent Binary Classifiers](classification/IndependentBinaryClassifiers.nb) is a Mathematica notebook that explains the basic ideas behind the approach.
+An interesting result here is that at least three classifiers are needed. The same limit (at least three) was encountered in the regression problem solved by the aerial mapping work discussed above.
