@@ -1,4 +1,5 @@
 # Autonomous precision error measurements
+![Three independent binary classifiers](/classification/three-independent-binary-classifiers.png)
 Yes, algorithms/robots can autonomously measure their own error. But there a lot of interesting caveats. This is not magic but a sophisticated version of error-correcting codes applied to the problem of measuring statistics of ground truth autonomously. The math of the algebraic approach advocated here (there are other methods based on maximum likelihood) has advantages and weaknesses.
 * You cannot measure the accuracy error, only precision error.
 * But this is not so bad because precision error is the hardest to manage anyhow.
