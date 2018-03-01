@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     11927,        315]
-NotebookOptionsPosition[     10732,        285]
-NotebookOutlinePosition[     11091,        301]
-CellTagsIndexPosition[     11048,        298]
+NotebookDataLength[     33438,        912]
+NotebookOptionsPosition[     28497,        826]
+NotebookOutlinePosition[     28857,        842]
+CellTagsIndexPosition[     28814,        839]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -251,7 +251,548 @@ polynomial system are:
 \>", "Text",
  CellChangeTimes->{{3.728719645167714*^9, 
   3.728719743893866*^9}},ExpressionUUID->"6f1f11fc-c1ce-46a1-a1aa-\
-8f374ef895d8"]
+8f374ef895d8"],
+
+Cell[CellGroupData[{
+
+Cell["Synthetic/Fake/Manufactured Ground Truth", "Subsection",
+ CellChangeTimes->{{3.728887179976809*^9, 
+  3.7288871961063757`*^9}},ExpressionUUID->"561af089-56f7-484c-9d6d-\
+c2f9a2ca4c85"],
+
+Cell["\<\
+The purpose of this notebook is to demonstrate the mathematics of ground \
+truth inference with polynomials. So to keep it simple, we will be \
+manufacturing our own ground truth. The following commands create the ground \
+truth for this problem - a list of labels for the true label of each data \
+point in the dataset.\
+\>", "Text",
+ CellChangeTimes->{{3.728887214297925*^9, 3.728887231105381*^9}, {
+  3.7288872833936157`*^9, 
+  3.7288873763176737`*^9}},ExpressionUUID->"9c864832-6c3d-4e16-beee-\
+bb6e56d093de"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"desiredALabelPrevalence", "=", 
+  RowBox[{"23", "/", "100"}]}], "\[IndentingNewLine]", 
+ RowBox[{"datasetSize", "=", "10000"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"labelGroundTruth", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"RandomReal", "[", "]"}], "<", "desiredALabelPrevalence"}], 
+       ",", "\[Alpha]", ",", "\[Beta]"}], "]"}], ",", 
+     RowBox[{"{", "datasetSize", "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7288873808945312`*^9, 3.728887476651248*^9}, {
+  3.728887517060007*^9, 
+  3.728887602918787*^9}},ExpressionUUID->"21ef45a2-f0c6-4b66-ad92-\
+d87e62b042cd"],
+
+Cell[BoxData[
+ FractionBox["23", "100"]], "Output",
+ CellChangeTimes->{
+  3.728887606013227*^9},ExpressionUUID->"5e8f2a65-d9e3-48b2-ab0f-\
+eac691b83d95"],
+
+Cell[BoxData["10000"], "Output",
+ CellChangeTimes->{
+  3.728887606023677*^9},ExpressionUUID->"ba26500e-ba62-489d-8bc4-\
+7c55e52c5580"]
+}, Open  ]],
+
+Cell["Let\[CloseCurlyQuote]s check that the ground truth makes sense", "Text",
+ CellChangeTimes->{{3.728887614493944*^9, 
+  3.728887625213187*^9}},ExpressionUUID->"cc04321f-9d76-493b-863a-\
+331ca87d3563"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RandomSample", "[", 
+  RowBox[{"labelGroundTruth", ",", "10"}], "]"}]], "Input",
+ CellChangeTimes->{{3.728887631606271*^9, 
+  3.7288876503854513`*^9}},ExpressionUUID->"1803f6e3-ea5b-4211-b2f3-\
+90a14b2ffdc7"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "\[Alpha]", ",", "\[Beta]", ",", "\[Alpha]", ",", "\[Beta]", ",", "\[Beta]",
+    ",", "\[Beta]", ",", "\[Beta]", ",", "\[Alpha]", ",", "\[Beta]", ",", 
+   "\[Beta]"}], "}"}]], "Output",
+ CellChangeTimes->{{3.728887645600399*^9, 
+  3.728887651934113*^9}},ExpressionUUID->"f70c9e2f-c2cd-4044-b8f3-\
+5adf1e55ddeb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"labelGroundTruth", "//", "Tally"}]], "Input",
+ CellChangeTimes->{{3.728887665944622*^9, 
+  3.728887671031726*^9}},ExpressionUUID->"d9edcc10-b3a5-47ba-943a-\
+d0f1d60cb188"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\[Beta]", ",", "7675"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\[Alpha]", ",", "2325"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.728887672319558*^9},ExpressionUUID->"ef99d1f4-ff6d-40a3-b599-\
+53f2b29ec520"]
+}, Open  ]],
+
+Cell["\<\
+Now we construct the synthetic data for the classifier label decisions. \
+Again, we are using synthetic data to create a simple example that focuses on \
+the math of the algorithm. You can substitute numbers from real independent \
+classifiers if you have them.\
+\>", "Text",
+ CellChangeTimes->{{3.728887697965377*^9, 
+  3.7288877895844927`*^9}},ExpressionUUID->"6726a11d-8d3d-48f4-bebe-\
+4cc492de7eb4"],
+
+Cell["\<\
+1. The first thing we need to specify is the accuracy of each of the \
+classifiers. It is this accuracy that we seek to estimate with the polynomial \
+system that is constructed from the classifier decisions alone. I\
+\[CloseCurlyQuote]ll arbitrarily pick them uniformly from the same range. I \
+need two accuracies, one for each label since we are doing binary \
+classification.\
+\>", "Text",
+ CellChangeTimes->{{3.728887817822543*^9, 
+  3.728887944980847*^9}},ExpressionUUID->"ee21a0f9-d1a2-485e-838c-\
+3792b12ea517"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"classifierAccuracies", "=", 
+  RowBox[{"Table", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"(*", " ", 
+       RowBox[{"The", " ", "\[Alpha]", " ", "accuracy"}], " ", "*)"}], " ", 
+      RowBox[{
+       RowBox[{"\[Alpha]", "\[Rule]", 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{"{", 
+          RowBox[{"0.7", ",", "0.9"}], "}"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"The", " ", "\[Beta]", " ", "accuracy"}], " ", "*)"}], " ", 
+       RowBox[{"\[Beta]", "\[Rule]", 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{"{", 
+          RowBox[{"0.7", ",", "0.9"}], "}"}], "]"}]}]}], "}"}], "//", 
+     "Association"}], ",", 
+    RowBox[{"{", "3", "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.728887959627071*^9, 3.728888114743988*^9}, {
+  3.728888159186618*^9, 
+  3.7288882132387953`*^9}},ExpressionUUID->"03291b45-364b-41b0-8456-\
+72bbc4df1101"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.7240735280313888`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.76234111021296`"}]}], 
+    "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.8734162737551594`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.7775994534610773`"}]}], 
+    "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.758298281453653`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.7573766395626498`"}]}], 
+    "\[RightAssociation]"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.72888823163343*^9},ExpressionUUID->"b45143dd-96e4-47fc-bde8-fa82571806ff"]
+}, Open  ]],
+
+Cell["\<\
+2. Now we need a function that takes a classifier\[CloseCurlyQuote]s \
+accuracies, a list true labels, and produces a sample of its classification \
+decisions.
+- OtherLabel is a convenience function to create incorrect classification \
+decisions.
+- SyntheticClassification is the actual function that produces a sample of \
+what a classifier with the specified accuracies would produce on a dataset.\
+\>", "Text",
+ CellChangeTimes->{{3.728888269792918*^9, 3.7288883378889313`*^9}, {
+  3.728888419959628*^9, 
+  3.728888508396233*^9}},ExpressionUUID->"e9dcc6e4-ce64-4711-8300-\
+15f8f591f2e6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"OtherLabel", "[", "\[Alpha]", "]"}], "=", 
+  "\[Beta]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"OtherLabel", "[", "\[Beta]", "]"}], "=", "\[Alpha]"}]}], "Input",
+ CellChangeTimes->{{3.7288885132690907`*^9, 
+  3.72888854308111*^9}},ExpressionUUID->"cee5ccc0-ad92-46bf-8f6a-\
+4512c604b7ee"],
+
+Cell[BoxData["\[Beta]"], "Output",
+ CellChangeTimes->{
+  3.7288885455774727`*^9},ExpressionUUID->"2bcc8795-9ec9-4437-8dc3-\
+d102168dc020"],
+
+Cell[BoxData["\[Alpha]"], "Output",
+ CellChangeTimes->{
+  3.728888545586809*^9},ExpressionUUID->"dbaddcb9-3630-44c8-8a4e-\
+3bdee2ac8188"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SyntheticClassification", "[", 
+   RowBox[{"classifierAccuracies_Association", ",", "dataset_List"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"dataset", "//", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Map", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Throw", " ", "a", " ", "die"}], ",", " ", 
+          RowBox[{"if", " ", "below", " ", "accuracy"}], ",", " ", 
+          RowBox[{"pick", " ", "the", " ", "true", " ", "label"}], ",", " ", 
+          RowBox[{"if", " ", "not"}], ",", " ", 
+          RowBox[{"pick", " ", "the", " ", "other", " ", "label"}]}], " ", 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"RandomReal", "[", "]"}], "<", 
+          RowBox[{"classifierAccuracies", "[", "#", "]"}]}], ",", "#", ",", 
+         RowBox[{"OtherLabel", "[", "#", "]"}]}], "]"}], "&"}], ",", 
+      "\[IndentingNewLine]", "#"}], "]"}], "&"}]}]}]], "Input",
+ CellChangeTimes->{{3.7288883419439774`*^9, 3.728888389247998*^9}, {
+  3.728888552939817*^9, 
+  3.72888870340943*^9}},ExpressionUUID->"9b2383c9-5cf7-4f00-b4fc-\
+bdc3a13bd5cb"],
+
+Cell["\<\
+3. The classifier decisions are next. Three lists, one for each classifier, \
+as long as the dataset.\
+\>", "Text",
+ CellChangeTimes->{{3.728888749019643*^9, 
+  3.728888782371209*^9}},ExpressionUUID->"d6f882bb-042a-4685-aee5-\
+bcfd543dc14a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"classifierDecisions", " ", "=", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"SyntheticClassification", "[", 
+       RowBox[{"#", ",", "labelGroundTruth"}], "]"}], "&"}], ",", 
+     "classifierAccuracies"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7288887881156807`*^9, 3.728888792539133*^9}, {
+  3.7288888293163137`*^9, 
+  3.728888870169568*^9}},ExpressionUUID->"d908bacd-87d4-4143-b685-\
+3a019c94969f"],
+
+Cell["Let\[CloseCurlyQuote]s make sure things are okay", "Text",
+ CellChangeTimes->{{3.728888885657579*^9, 
+  3.728888894241395*^9}},ExpressionUUID->"ab16e77b-bace-48fc-8839-\
+4d4e02312d3c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"classifierDecisions", "[", 
+   RowBox[{"[", "1", "]"}], "]"}], "//", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"RandomSample", "[", 
+      RowBox[{"#", ",", "10"}], "]"}], ",", 
+     RowBox[{"#", "//", "Length"}]}], "}"}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"classifierDecisions", "[", 
+   RowBox[{"[", "2", "]"}], "]"}], "//", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"RandomSample", "[", 
+      RowBox[{"#", ",", "10"}], "]"}], ",", 
+     RowBox[{"#", "//", "Length"}]}], "}"}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"classifierDecisions", "[", 
+   RowBox[{"[", "3", "]"}], "]"}], "//", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"RandomSample", "[", 
+      RowBox[{"#", ",", "10"}], "]"}], ",", 
+     RowBox[{"#", "//", "Length"}]}], "}"}], "&"}]}]}], "Input",
+ CellChangeTimes->{{3.7288888984654503`*^9, 
+  3.728888984047575*^9}},ExpressionUUID->"b3a4faa3-2bc9-40e1-8101-\
+9ca7897ba98d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "\[Alpha]", ",", "\[Beta]", ",", "\[Beta]", ",", "\[Beta]", ",", 
+     "\[Beta]", ",", "\[Alpha]", ",", "\[Alpha]", ",", "\[Beta]", ",", 
+     "\[Alpha]", ",", "\[Beta]"}], "}"}], ",", "10000"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.7288889317542562`*^9, {3.728888961862649*^9, 
+   3.72888898505014*^9}},ExpressionUUID->"f7c5b955-0275-47e3-9159-\
+ebbdebe3502a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "\[Beta]", ",", "\[Beta]", ",", "\[Beta]", ",", "\[Beta]", ",", "\[Beta]",
+      ",", "\[Beta]", ",", "\[Alpha]", ",", "\[Beta]", ",", "\[Alpha]", ",", 
+     "\[Alpha]"}], "}"}], ",", "10000"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.7288889317542562`*^9, {3.728888961862649*^9, 
+   3.728888985060454*^9}},ExpressionUUID->"9f762a7a-3a2b-46f6-bc88-\
+8cc211844d86"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "\[Beta]", ",", "\[Alpha]", ",", "\[Beta]", ",", "\[Beta]", ",", 
+     "\[Beta]", ",", "\[Alpha]", ",", "\[Beta]", ",", "\[Beta]", ",", 
+     "\[Beta]", ",", "\[Beta]"}], "}"}], ",", "10000"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.7288889317542562`*^9, {3.728888961862649*^9, 
+   3.72888898507073*^9}},ExpressionUUID->"3670b635-e92e-4fdc-911b-\
+7c219f3b466d"]
+}, Open  ]],
+
+Cell["\<\
+Let\[CloseCurlyQuote]s also make sure that we are getting noisy \
+classification of the true labels\
+\>", "Text",
+ CellChangeTimes->{{3.728889006416317*^9, 
+  3.7288890259505672`*^9}},ExpressionUUID->"782a281f-3b8f-4b45-a7ff-\
+1ebd6b81766d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"Tally", ",", "classifierDecisions"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7288890344036694`*^9, 
+  3.7288890460708923`*^9}},ExpressionUUID->"49b7f0c2-65f5-4472-ae4b-\
+eea15bab2e9d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "6385"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "3615"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "6287"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "3713"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "3653"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "6347"}], "}"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.728889047965972*^9},ExpressionUUID->"2bafdfb4-08f5-4f97-8abd-\
+061a2d5af690"]
+}, Open  ]],
+
+Cell["\<\
+4. Now we can construct the left side input of the ground truth polynomials \
+for independent binary classifiers - the frequency of the voting patters\
+\>", "Text",
+ CellChangeTimes->{{3.728889072955759*^9, 
+  3.7288891316558943`*^9}},ExpressionUUID->"972850d2-ddea-4e79-ae9d-\
+251efe0b435c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"votingPatternCounts", "=", 
+  RowBox[{
+   RowBox[{"classifierDecisions", "//", "Transpose"}], "//", 
+   "Tally"}]}]], "Input",
+ CellChangeTimes->{{3.728889137158533*^9, 
+  3.728889233533936*^9}},ExpressionUUID->"bbdcf664-f671-4660-af96-\
+f870099e4307"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Alpha]"}], "}"}], ",", 
+     "1181"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Beta]"}], "}"}], ",", 
+     "3433"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Beta]"}], "}"}], ",", 
+     "695"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Alpha]"}], "}"}], ",", 
+     "526"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Beta]"}], "}"}], ",", 
+     "1072"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Beta]"}], "}"}], ",", 
+     "1147"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Alpha]"}], "}"}], ",", 
+     "1247"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Alpha]"}], "}"}], ",", 
+     "699"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.7288891790441923`*^9, 
+  3.7288892347514153`*^9}},ExpressionUUID->"f8e58cc9-2391-439e-8340-\
+6317325083e4"]
+}, Open  ]],
+
+Cell["\<\
+Let\[CloseCurlyQuote]s sort them and pretty print them to see the pattern \
+better\
+\>", "Text",
+ CellChangeTimes->{{3.728889278036971*^9, 
+  3.728889307667533*^9}},ExpressionUUID->"f2681334-e584-4242-83e4-\
+20ff0d55dfd6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"votingPatternCounts", "//", "Sort"}], "//", "Column"}]], "Input",
+ CellChangeTimes->{{3.728889313362255*^9, 
+  3.728889382669887*^9}},ExpressionUUID->"00413eba-30c2-4e3e-9c3b-\
+00137b04df85"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Alpha]"}], "}"}], ",", 
+       "1247"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Alpha]", ",", "\[Alpha]", ",", "\[Beta]"}], "}"}], ",", 
+       "695"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Alpha]"}], "}"}], ",", 
+       "526"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Alpha]", ",", "\[Beta]", ",", "\[Beta]"}], "}"}], ",", 
+       "1147"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Alpha]"}], "}"}], ",", 
+       "699"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Beta]", ",", "\[Alpha]", ",", "\[Beta]"}], "}"}], ",", 
+       "1072"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Alpha]"}], "}"}], ",", 
+       "1181"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Beta]", ",", "\[Beta]", ",", "\[Beta]"}], "}"}], ",", 
+       "3433"}], "}"}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{
+  3.72888932390705*^9, {3.728889378268167*^9, 
+   3.728889383714323*^9}},ExpressionUUID->"dd61482c-e4be-4d85-9f35-\
+3974f6fd8d9a"]
+}, Open  ]],
+
+Cell["\<\
+Everything looks okay with our synthetic data. Note that votingPatternCounts \
+no longer contains any information about the true label for any of the data \
+points in labelGroundTruth. Hence, any algorithm that only uses \
+votingPatternCounts - the observed frequency of classifier voting patterns, \
+would be carrying out ground truth inference. The goal of the next section is \
+to estimate classifierAccuracies and the prevalence of the labels using only \
+votingPatternCounts.\
+\>", "Text",
+ CellChangeTimes->{{3.728889433553658*^9, 3.7288895450884867`*^9}, {
+  3.7288896272037992`*^9, 
+  3.728889660256007*^9}},ExpressionUUID->"df55e54c-4fc4-4f8a-a938-\
+7ced60817a57"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -284,7 +825,7 @@ using ideas from algebraic geometry such as a Groebner basis and Buchberger\
 }, Open  ]]
 },
 WindowSize->{808, 690},
-WindowMargins->{{12, Automatic}, {Automatic, 24}},
+WindowMargins->{{212, Automatic}, {42, Automatic}},
 FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
 10, 2017)",
 StyleDefinitions->"Default.nb"
@@ -310,11 +851,67 @@ Cell[2473, 71, 6225, 163, 194, "Input",ExpressionUUID->"21e705a5-f166-43ac-8515-
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[8735, 239, 191, 3, 67, "Section",ExpressionUUID->"215da9fc-dbc9-447e-ab98-01a6708742af"],
-Cell[8929, 244, 411, 9, 104, "Text",ExpressionUUID->"6f1f11fc-c1ce-46a1-a1aa-8f374ef895d8"]
+Cell[8929, 244, 411, 9, 104, "Text",ExpressionUUID->"6f1f11fc-c1ce-46a1-a1aa-8f374ef895d8"],
+Cell[CellGroupData[{
+Cell[9365, 257, 190, 3, 54, "Subsection",ExpressionUUID->"561af089-56f7-484c-9d6d-c2f9a2ca4c85"],
+Cell[9558, 262, 523, 10, 81, "Text",ExpressionUUID->"9c864832-6c3d-4e16-beee-bb6e56d093de"],
+Cell[CellGroupData[{
+Cell[10106, 276, 695, 17, 94, "Input",ExpressionUUID->"21ef45a2-f0c6-4b66-ad92-d87e62b042cd"],
+Cell[10804, 295, 153, 4, 51, "Output",ExpressionUUID->"5e8f2a65-d9e3-48b2-ab0f-eac691b83d95"],
+Cell[10960, 301, 134, 3, 34, "Output",ExpressionUUID->"ba26500e-ba62-489d-8bc4-7c55e52c5580"]
+}, Open  ]],
+Cell[11109, 307, 204, 3, 35, "Text",ExpressionUUID->"cc04321f-9d76-493b-863a-331ca87d3563"],
+Cell[CellGroupData[{
+Cell[11338, 314, 232, 5, 30, "Input",ExpressionUUID->"1803f6e3-ea5b-4211-b2f3-90a14b2ffdc7"],
+Cell[11573, 321, 353, 8, 34, "Output",ExpressionUUID->"f70c9e2f-c2cd-4044-b8f3-5adf1e55ddeb"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9377, 258, 200, 3, 67, "Section",ExpressionUUID->"24b707b1-63c5-4f03-b1ef-d11594341964"],
-Cell[9580, 263, 1124, 18, 265, "Text",ExpressionUUID->"1f6b19e0-61e3-459d-ab19-6bf7eb88bc3f"]
+Cell[11963, 334, 195, 4, 30, "Input",ExpressionUUID->"d9edcc10-b3a5-47ba-943a-d0f1d60cb188"],
+Cell[12161, 340, 292, 9, 34, "Output",ExpressionUUID->"ef99d1f4-ff6d-40a3-b599-53f2b29ec520"]
+}, Open  ]],
+Cell[12468, 352, 413, 8, 81, "Text",ExpressionUUID->"6726a11d-8d3d-48f4-bebe-4cc492de7eb4"],
+Cell[12884, 362, 529, 10, 104, "Text",ExpressionUUID->"ee21a0f9-d1a2-485e-838c-3792b12ea517"],
+Cell[CellGroupData[{
+Cell[13438, 376, 979, 25, 73, "Input",ExpressionUUID->"03291b45-364b-41b0-8456-72bbc4df1101"],
+Cell[14420, 403, 785, 19, 56, "Output",ExpressionUUID->"b45143dd-96e4-47fc-bde8-fa82571806ff"]
+}, Open  ]],
+Cell[15220, 425, 600, 12, 127, "Text",ExpressionUUID->"e9dcc6e4-ce64-4711-8300-15f8f591f2e6"],
+Cell[CellGroupData[{
+Cell[15845, 441, 331, 8, 52, "Input",ExpressionUUID->"cee5ccc0-ad92-46bf-8f6a-4512c604b7ee"],
+Cell[16179, 451, 138, 3, 34, "Output",ExpressionUUID->"2bcc8795-9ec9-4437-8dc3-d102168dc020"],
+Cell[16320, 456, 137, 3, 34, "Output",ExpressionUUID->"dbaddcb9-3630-44c8-8a4e-3bdee2ac8188"]
+}, Open  ]],
+Cell[16472, 462, 1258, 28, 178, "Input",ExpressionUUID->"9b2383c9-5cf7-4f00-b4fc-bdc3a13bd5cb"],
+Cell[17733, 492, 251, 6, 35, "Text",ExpressionUUID->"d6f882bb-042a-4685-aee5-bcfd543dc14a"],
+Cell[17987, 500, 473, 12, 52, "Input",ExpressionUUID->"d908bacd-87d4-4143-b685-3a019c94969f"],
+Cell[18463, 514, 190, 3, 35, "Text",ExpressionUUID->"ab16e77b-bace-48fc-8839-4d4e02312d3c"],
+Cell[CellGroupData[{
+Cell[18678, 521, 999, 30, 73, "Input",ExpressionUUID->"b3a4faa3-2bc9-40e1-8101-9ca7897ba98d"],
+Cell[19680, 553, 440, 11, 34, "Output",ExpressionUUID->"f7c5b955-0275-47e3-9159-ebbdebe3502a"],
+Cell[20123, 566, 440, 11, 34, "Output",ExpressionUUID->"9f762a7a-3a2b-46f6-bc88-8cc211844d86"],
+Cell[20566, 579, 438, 11, 34, "Output",ExpressionUUID->"3670b635-e92e-4fdc-911b-7c219f3b466d"]
+}, Open  ]],
+Cell[21019, 593, 251, 6, 35, "Text",ExpressionUUID->"782a281f-3b8f-4b45-a7ff-1ebd6b81766d"],
+Cell[CellGroupData[{
+Cell[21295, 603, 231, 5, 30, "Input",ExpressionUUID->"49b7f0c2-65f5-4472-ae4b-eea15bab2e9d"],
+Cell[21529, 610, 707, 23, 34, "Output",ExpressionUUID->"2bafdfb4-08f5-4f97-8abd-061a2d5af690"]
+}, Open  ]],
+Cell[22251, 636, 302, 6, 58, "Text",ExpressionUUID->"972850d2-ddea-4e79-ae9d-251efe0b435c"],
+Cell[CellGroupData[{
+Cell[22578, 646, 276, 7, 30, "Input",ExpressionUUID->"bbdcf664-f671-4660-af96-f870099e4307"],
+Cell[22857, 655, 1384, 45, 56, "Output",ExpressionUUID->"f8e58cc9-2391-439e-8340-6317325083e4"]
+}, Open  ]],
+Cell[24256, 703, 232, 6, 35, "Text",ExpressionUUID->"f2681334-e584-4242-83e4-20ff0d55dfd6"],
+Cell[CellGroupData[{
+Cell[24513, 713, 226, 5, 30, "Input",ExpressionUUID->"00413eba-30c2-4e3e-9c3b-00137b04df85"],
+Cell[24742, 720, 1653, 58, 159, "Output",ExpressionUUID->"dd61482c-e4be-4d85-9f35-3974f6fd8d9a"]
+}, Open  ]],
+Cell[26410, 781, 683, 12, 127, "Text",ExpressionUUID->"df55e54c-4fc4-4f8a-a938-7ced60817a57"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27142, 799, 200, 3, 67, "Section",ExpressionUUID->"24b707b1-63c5-4f03-b1ef-d11594341964"],
+Cell[27345, 804, 1124, 18, 265, "Text",ExpressionUUID->"1f6b19e0-61e3-459d-ab19-6bf7eb88bc3f"]
 }, Open  ]]
 }, Open  ]]
 }
