@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     76361,       2133]
-NotebookOptionsPosition[     68046,       1989]
-NotebookOutlinePosition[     68406,       2005]
-CellTagsIndexPosition[     68363,       2002]
+NotebookDataLength[     78714,       2192]
+NotebookOptionsPosition[     69930,       2040]
+NotebookOutlinePosition[     70344,       2058]
+CellTagsIndexPosition[     70301,       2055]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1982,13 +1982,66 @@ Cell[BoxData[
  CellChangeTimes->{{3.7289751013884983`*^9, 
   3.728975110555575*^9}},ExpressionUUID->"dabdcd23-345a-4357-8784-\
 bbda8e977c75"]
-}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+Recall what the \[OpenCurlyDoubleQuote]real\[CloseCurlyDoubleQuote] ground \
+truth is in this manufactured case\
+\>", "Text",
+ CellChangeTimes->{{3.728975481629158*^9, 
+  3.728975514211464*^9}},ExpressionUUID->"f4ace36b-1d12-4c3d-8ee6-\
+bcf9f3df2a91"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["classifierAccuracies"], "Input",
+ CellChangeTimes->{{3.7289755222010307`*^9, 
+  3.728975523643688*^9}},ExpressionUUID->"647123a7-391e-4d29-b88b-\
+0006490818f8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.7240735280313888`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.76234111021296`"}]}], 
+    "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.8734162737551594`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.7775994534610773`"}]}], 
+    "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "\[Rule]", "0.758298281453653`"}], ",", 
+     RowBox[{"\[Beta]", "\[Rule]", "0.7573766395626498`"}]}], 
+    "\[RightAssociation]"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.72897552496349*^9},ExpressionUUID->"14304de3-bf2a-417e-be0c-5e2c24897ace"]
+}, Open  ]],
+
+Cell["\<\
+But note that classifierAccuracies are the dice we three to produce the \
+dataset. So we should really be comparing our answer to the sample statistic \
+- ground truth inference is always about the sample statistics as befits a \
+non-parametric method!
+
+Next time I\[CloseCurlyQuote]ll calculate the actual recognition of the data \
+by classifier 1 so we can see how the solution from the ground truth \
+polynomials, 0.746, compares with the sample and not with 0.724.\
+\>", "Text",
+ CellChangeTimes->{{3.728975567663848*^9, 
+  3.728975751595338*^9}},ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-\
+e5631ee80480"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{808, 690},
 WindowMargins->{{212, Automatic}, {42, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
 FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
 10, 2017)",
 StyleDefinitions->"Default.nb"
@@ -2012,7 +2065,7 @@ Cell[1529, 46, 281, 6, 105, "Section",ExpressionUUID->"de6714f4-5fc7-4b18-823f-2
 Cell[1813, 54, 657, 15, 81, "Text",ExpressionUUID->"c2474e92-5be1-4c55-a3c2-a36edd540205"],
 Cell[CellGroupData[{
 Cell[2495, 73, 6375, 167, 194, "Input",ExpressionUUID->"21e705a5-f166-43ac-8515-daf863742383"],
-Cell[8873, 242, 6143, 165, 232, "Output",ExpressionUUID->"44e3032b-5c5b-462b-a784-9bc9d88fec39"]
+Cell[8873, 242, 6143, 165, 198, "Output",ExpressionUUID->"44e3032b-5c5b-462b-a784-9bc9d88fec39"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
@@ -2130,8 +2183,14 @@ Cell[CellGroupData[{
 Cell[65120, 1898, 217, 4, 54, "Subsection",ExpressionUUID->"1d97c0f6-1981-4594-8a93-5a8d680bb708"],
 Cell[CellGroupData[{
 Cell[65362, 1906, 442, 12, 30, "Input",ExpressionUUID->"4e9e9fbc-868f-420d-bc37-309d9fa41591"],
-Cell[65807, 1920, 2187, 63, 164, "Output",ExpressionUUID->"dabdcd23-345a-4357-8784-bbda8e977c75"]
-}, Open  ]]
+Cell[65807, 1920, 2187, 63, 106, "Output",ExpressionUUID->"dabdcd23-345a-4357-8784-bbda8e977c75"]
+}, Open  ]],
+Cell[68009, 1986, 261, 6, 35, "Text",ExpressionUUID->"f4ace36b-1d12-4c3d-8ee6-bcf9f3df2a91"],
+Cell[CellGroupData[{
+Cell[68295, 1996, 174, 3, 30, "Input",ExpressionUUID->"647123a7-391e-4d29-b88b-0006490818f8"],
+Cell[68472, 2001, 785, 19, 56, "Output",ExpressionUUID->"14304de3-bf2a-417e-be0c-5e2c24897ace"]
+}, Open  ]],
+Cell[69272, 2023, 618, 12, 150, "Text",ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-e5631ee80480"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
