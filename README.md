@@ -6,7 +6,11 @@ The Flammarion engraving is frequently taken as a metaphor for piercing the veil
 
 This collection contains examples of my work that solve the ground truth inference problem by estimating a statistic of ground truth without knowing ground truth itself.
 
-The term *ground truth* sounds fancy and philosophical but it is not. It actually is easy to understand and it is just a generic term for the different forms it takes. Let's take one case I discuss here - binary classification. You have a bunch of data and each of your data points has an "A" or "B" label. The ground truth for that data would be the list of the true labels for each of the data points,
+The term *ground truth* sounds fancy and philosophical but it is not. It is easy to understand. It is just a generic term for the different forms it takes as detailed knowledge about your data. The individual numbers in a long list of numbers would be a simple example.
+
+If you have all the numbers on that list. you can calculate any statistic you want - its mean, its quartiles, etc. But suppose you just wanted to know the mean. Then you can get away with just keeping a running sum and a counter. You are able to calculate a statistic of the ground truth while refusing to remember all of it at once! People usually call those *data stream algorithms*. The [./hyperloglog](./hyperloglog/) folder contains work I have done with HyperLogLog, invented by Flajolet et al, to measure time constants in a huge ad-tech database where ground truth is expensive to compute.
+
+Here is another example. Let's take a case I have solved - the accuracy of binary classifiers when label ground truth is not known. You have a bunch of data and each of your data points has an "A" or "B" label. The ground truth for that data would be the list of the true labels for each of the data points,
 <a href="https://www.codecogs.com/eqnedit.php?latex=\{\ell_{i,\text{true}}\}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\{\ell_{i,\text{true}}\}" title="\{\ell_{i,\text{true}}\}" /></a>.
 Another example would be a company that sells speech recognition as a service to call centers. Ground truth could be the transcripts for all the audio it processed daily in production.
 
