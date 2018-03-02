@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     78714,       2192]
-NotebookOptionsPosition[     69930,       2040]
-NotebookOutlinePosition[     70344,       2058]
-CellTagsIndexPosition[     70301,       2055]
+NotebookDataLength[     83450,       2326]
+NotebookOptionsPosition[     73578,       2156]
+NotebookOutlinePosition[     73992,       2174]
+CellTagsIndexPosition[     73949,       2171]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2027,13 +2027,129 @@ dataset. So we should really be comparing our answer to the sample statistic \
 - ground truth inference is always about the sample statistics as befits a \
 non-parametric method!
 
-Next time I\[CloseCurlyQuote]ll calculate the actual recognition of the data \
-by classifier 1 so we can see how the solution from the ground truth \
-polynomials, 0.746, compares with the sample and not with 0.724.\
+Let\[CloseCurlyQuote]s calculate the sample accuracies of classifier 1 to see \
+how far off the 0.746 answer is from it. We align our ground truth with the \
+classifiers decisions\
 \>", "Text",
- CellChangeTimes->{{3.728975567663848*^9, 
-  3.728975751595338*^9}},ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-\
-e5631ee80480"]
+ CellChangeTimes->{{3.728975567663848*^9, 3.728975751595338*^9}, {
+  3.728978484278083*^9, 3.7289785220543823`*^9}, {3.728978576809787*^9, 
+  3.72897858954912*^9}},ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-\
+e5631ee80480"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "@", 
+  RowBox[{"classifierDecisions", "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.728978643054072*^9, 
+  3.728978655435237*^9}},ExpressionUUID->"46f28cab-3321-4338-b5d9-\
+97fda4e1abcb"],
+
+Cell[BoxData["10000"], "Output",
+ CellChangeTimes->{
+  3.728978656914872*^9},ExpressionUUID->"3df8dd8c-e855-4658-99c1-\
+7d54aeb93a3b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "@", "labelGroundTruth"}]], "Input",
+ CellChangeTimes->{{3.728978660139629*^9, 
+  3.7289786658238163`*^9}},ExpressionUUID->"ea224b46-ce4b-4a55-b8c1-\
+92dc27b1edb4"],
+
+Cell[BoxData["10000"], "Output",
+ CellChangeTimes->{
+  3.728978667971489*^9},ExpressionUUID->"c7c11fec-5d6c-4f6f-944f-\
+f390a57f4022"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{"labelGroundTruth", ",", 
+       RowBox[{"classifierDecisions", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "}"}], "]"}], "//", 
+    RowBox[{
+     RowBox[{"GroupBy", "[", 
+      RowBox[{"#", ",", "First"}], "]"}], "&"}]}], "//", 
+   RowBox[{
+    RowBox[{"Map", "[", 
+     RowBox[{"Last", ",", "#", ",", 
+      RowBox[{"{", "2", "}"}]}], "]"}], "&"}]}], "//", 
+  RowBox[{
+   RowBox[{"Tally", "/@", "#"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.728978601069515*^9, 3.728978620236431*^9}, {
+  3.728978675141693*^9, 3.728978712954678*^9}, {3.728978756635126*^9, 
+  3.7289788042419443`*^9}},ExpressionUUID->"136be405-52ee-4742-ba9b-\
+17b72a254233"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\[Beta]", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Beta]", ",", "5796"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]", ",", "1879"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\[Alpha]", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Beta]", ",", "589"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Alpha]", ",", "1736"}], "}"}]}], "}"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.7289786221522093`*^9, 3.728978688442168*^9, 
+  3.728978805815855*^9},ExpressionUUID->"2e20ea5e-b66a-48b5-acdc-\
+d2642e52c250"]
+}, Open  ]],
+
+Cell["\<\
+So the sample accuracy for the alpha data points for classifier 1 is\
+\>", "Text",
+ CellChangeTimes->{{3.728978830411724*^9, 
+  3.728978848739581*^9}},ExpressionUUID->"ed67f897-7581-4180-aeca-\
+75842333430c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"1736", "/", 
+   RowBox[{"(", 
+    RowBox[{"1736", "+", "589"}], ")"}]}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.728978852490484*^9, 
+  3.72897886528353*^9}},ExpressionUUID->"750e01ef-af00-43e2-b0e5-\
+2b2f7f0689b9"],
+
+Cell[BoxData["0.7466666666666667`"], "Output",
+ CellChangeTimes->{
+  3.728978866625401*^9},ExpressionUUID->"b0ce1fb6-7bd3-49ec-918c-\
+3a9ceab2f095"]
+}, Open  ]],
+
+Cell["\<\
+Ha ha! Cool. This simple experiment should clarify what it means to say that \
+ground truth inference algorithms measure the statistic of the ground truth. \
+And ground truth is always referring to the sample at hand in your study. The \
+method estimated the sample statistic of classifier 1 on the alpha label - \
+0.746667 as 0.746384. That estimate is not about the die that I used to \
+produce the synthetic data, the process statistic (0.724074) that is in \
+classifierAccuracies.\
+\>", "Text",
+ CellChangeTimes->{{3.728978880226473*^9, 
+  3.728979154996169*^9}},ExpressionUUID->"6a9fdd8c-0f0c-4122-b75b-\
+75e8ea3b2c94"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -2190,7 +2306,25 @@ Cell[CellGroupData[{
 Cell[68295, 1996, 174, 3, 30, "Input",ExpressionUUID->"647123a7-391e-4d29-b88b-0006490818f8"],
 Cell[68472, 2001, 785, 19, 56, "Output",ExpressionUUID->"14304de3-bf2a-417e-be0c-5e2c24897ace"]
 }, Open  ]],
-Cell[69272, 2023, 618, 12, 150, "Text",ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-e5631ee80480"]
+Cell[69272, 2023, 679, 13, 150, "Text",ExpressionUUID->"33dab72b-3aa4-4dd3-bc9a-e5631ee80480"],
+Cell[CellGroupData[{
+Cell[69976, 2040, 250, 6, 30, "Input",ExpressionUUID->"46f28cab-3321-4338-b5d9-97fda4e1abcb"],
+Cell[70229, 2048, 134, 3, 34, "Output",ExpressionUUID->"3df8dd8c-e855-4658-99c1-7d54aeb93a3b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70400, 2056, 197, 4, 30, "Input",ExpressionUUID->"ea224b46-ce4b-4a55-b8c1-92dc27b1edb4"],
+Cell[70600, 2062, 134, 3, 34, "Output",ExpressionUUID->"c7c11fec-5d6c-4f6f-944f-f390a57f4022"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70771, 2070, 760, 21, 52, "Input",ExpressionUUID->"136be405-52ee-4742-ba9b-17b72a254233"],
+Cell[71534, 2093, 691, 20, 34, "Output",ExpressionUUID->"2e20ea5e-b66a-48b5-acdc-d2642e52c250"]
+}, Open  ]],
+Cell[72240, 2116, 218, 5, 35, "Text",ExpressionUUID->"ed67f897-7581-4180-aeca-75842333430c"],
+Cell[CellGroupData[{
+Cell[72483, 2125, 255, 7, 30, "Input",ExpressionUUID->"750e01ef-af00-43e2-b0e5-2b2f7f0689b9"],
+Cell[72741, 2134, 148, 3, 34, "Output",ExpressionUUID->"b0ce1fb6-7bd3-49ec-918c-3a9ceab2f095"]
+}, Open  ]],
+Cell[72904, 2140, 634, 11, 127, "Text",ExpressionUUID->"6a9fdd8c-0f0c-4122-b75b-75e8ea3b2c94"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
