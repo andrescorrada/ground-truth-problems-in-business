@@ -53,11 +53,11 @@ The [Time In Ad-Tech Data Flows](presentations/TimeInAdTechDataFlows.pptx) talk 
 The following paper was my initial foray into this problem. It considers how to figure out the precision error that multiple maps of the ground are making. In hindsight, you could use the same algebraic set-up of the problem for figuring out the precision error of a collection of regressors. This work is notable in that it solves the problem even when the regressors are correlated using ideas from compressed sensing. It is a rare algorithm in the field of ground truth inference that can deal with correlated decision makers.
 [Autonomous Geometric Precision Error Estimation in Low-Level Computer Vision Tasks](http://icml2008.cs.helsinki.fi/papers/121.pdf)
 ### When ground truth is private - accuracy of a statistical Unique ID system without knowing the identity of the users
-This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company that sells a unique ID service. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
+This paper illustrates inferring a statistic of the ground truth when it is private - the true identity of users that arrive at a company's publisher network. This illustrates that it is possible to respect the privacy of users *and* measure the accuracy of your service.
 [Algebra of Ground Truth Inference for Web Unique Identifiers](./papers/bc-id-ground-truth-wsdm-2015.pdf)
 
 ## Technology
-Data Engines Corporation (I am a founder) [owns patent 9,646249](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=1&f=G&l=50&co1=AND&d=PTXT&s1=9,646,249.PN.&OS=PN/9,646,249&RS=PN/9,646,249) to a polynomial method for measuring the accuracy of binary classifiers when correct labels are unavailable. 
+Data Engines Corporation (I am a founder) [owns patent 9,646,249](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=1&f=G&l=50&co1=AND&d=PTXT&s1=9,646,249.PN.&OS=PN/9,646,249&RS=PN/9,646,249) to a polynomial method for measuring the accuracy of binary classifiers when correct labels are unavailable. 
 
 The basic idea behind the technology in the patent is explained in- [Independent Binary Classifiers](classification/IndependentBinaryClassifiers.nb) ,a Mathematica notebook showing the algebraic nature of the algorithm.
 An interesting result here is that at least three classifiers are needed. The same limit (at least three) was encountered in the regression problem solved by the aerial mapping work discussed above.
