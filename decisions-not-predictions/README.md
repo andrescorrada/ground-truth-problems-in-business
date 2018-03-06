@@ -1,4 +1,5 @@
 # Decisions, not predictions
+![Curve of Shannon entropy for a binary process](./binary-shannon-entropy.png)
 This concept explains the "in business" component of this repository. I am emphasizing one of the roles of data science in business - to help make better decisions. The part in data science that is science, predicting, is a means to the business goal - deciding.
 
 But this idea is not just organizational, if you will, it is actually reflected in the mathematics of how to use ground truth inference algorithms. Since your job is not to come with the best predictions, you can use methods that lead to the best decisions. And precision is what matters for decision, not accuracy!
