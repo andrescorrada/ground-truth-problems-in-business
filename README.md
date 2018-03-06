@@ -60,4 +60,5 @@ This paper illustrates inferring a statistic of the ground truth when it is priv
 Data Engines Corporation (I am a founder) [owns patent 9,646,249](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=1&f=G&l=50&co1=AND&d=PTXT&s1=9,646,249.PN.&OS=PN/9,646,249&RS=PN/9,646,249) to a polynomial method for measuring the accuracy of binary classifiers when correct labels are unavailable. 
 
 The basic idea behind the technology in the patent is explained in- [Independent Binary Classifiers](classification/IndependentBinaryClassifiers.nb) ,a Mathematica notebook showing the algebraic nature of the algorithm.
-An interesting result here is that at least three classifiers are needed. The same limit (at least three) was encountered in the regression problem solved by the aerial mapping work discussed above.
+
+An interesting result here is that at least three classifiers are needed. The same limit (at least three) was encountered in the regression problem solved by the aerial mapping work discussed above. But, the accuracy for unique web ids problem was solved with two. The difference there being that the two opinions made different types of errors. This created enough polynomial equations to solve for the unknown statistics of ground truth.
