@@ -30,5 +30,7 @@ My current record is about 1% bounds on the accuracy of a binary classifier for 
 
 It takes the ground truth method eight updates to do the same. That is an enormous savings in updating steps, a 1-8/5000 = 99.8% reduction in calibration costs.
 
+I hope this has made clear the meaning of the aphorism "accuracy is cheap, precision expensive". If you have a technique that solves the precision problem, solving the accuracy problem is trival in comparison.
+
 
 
