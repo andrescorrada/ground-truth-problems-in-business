@@ -25,5 +25,10 @@ Instead I'll show you graphically what happens. Notice how dramatically differen
 For exactly the same sequence of corrects and wrongs as the above sequence, this is what happens when you are in state 2. Accuracy is cheap, precision is expensive! I told you it was not a fair fight to begin with.
 ![Bayesian updating for the two value uncertain state](./two-values-bayesian-updating.png)
 
+## A fairer fight between precision and accuracy
+My current record is about 1% bounds on the accuracy of a binary classifier for MNIST or the HIGGS datasets. At that level of resolution for the estimate of the accuracy, you would have to compare ground truth inference to the uninformed prior with 51 equally spaced values. When you do that, you find that it takes 5000 updates, on average, for the uninformed prior to reach near certainty that 80% is the right value with 1% error margins.
+
+It takes the ground truth method eight updates to do the same. That is an enormous savings in updating steps, a 1-8/5000 = 99.8% reduction in calibration costs.
+
 
 
