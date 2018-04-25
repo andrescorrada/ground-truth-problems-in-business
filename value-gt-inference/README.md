@@ -17,7 +17,8 @@ You can see that the improvement is incremental, but still noticeable. We can cr
 ![Error mask for wisdom of the crowd with all 9](./all-9-wisdom-error-mask.png)
 The error mask for the best three is greener.
 ![Error mask for wisdom of the crowd with best three.](./best-three-wisdom-error-mask.png)
-And the tallies of correct and error pixels says it even more dramatically
+And the tallies of correct and error pixels says it even more dramatically.
+
 |  wisdom of the crowd group | # correct   | # incorrect  |
 |---|---|---|
 |  all 9 |  6,512,651 |  987,349 |
