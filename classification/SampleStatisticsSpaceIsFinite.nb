@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      6521,        144]
-NotebookOptionsPosition[      5827,        123]
-NotebookOutlinePosition[      6222,        139]
-CellTagsIndexPosition[      6179,        136]
+NotebookDataLength[     22691,        548]
+NotebookOptionsPosition[     20676,        505]
+NotebookOutlinePosition[     21071,        521]
+CellTagsIndexPosition[     21028,        518]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -88,6 +88,11 @@ that statistic.\
   3.7989514031439447`*^9}},ExpressionUUID->"64a85e73-97fc-4574-956c-\
 0f45b7f4bf4b"],
 
+Cell["The Two types of sample statistics in GTI", "Section",
+ CellChangeTimes->{{3.79895764858563*^9, 
+  3.798957659960816*^9}},ExpressionUUID->"dbd25bdc-5c86-400b-b852-\
+1409abadf8fb"],
+
 Cell[CellGroupData[{
 
 Cell["\<\
@@ -117,7 +122,384 @@ is valuable engineering.\
  CellChangeTimes->{{3.7989515033293447`*^9, 3.798951728996728*^9}, {
   3.7989517794670877`*^9, 
   3.7989519399552507`*^9}},ExpressionUUID->"87398277-b7b9-45f5-a978-\
-d5997ddfe61e"]
+d5997ddfe61e"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The advantages and disadvantages of taking a black-box approach while \
+monitoring AI or human algorithms.\
+\>", "Subsection",
+ CellChangeTimes->{{3.79895310435732*^9, 
+  3.798953133612266*^9}},ExpressionUUID->"1418a176-9638-41d4-a0d3-\
+d16b15259ec8"],
+
+Cell["\<\
+When I first introduced the notion of calculating a ground truth statistic to \
+scientists and engineers at Nuance around 2008, one engineers criticism was \
+very telling and is actually echoed in much of the self-assessment approaches \
+used today. The approach you see here for monitoring is the dumbest approach \
+possible. We will treat all the binary classifiers as black-boxes that merely \
+produce noisy labels.
+
+This is not the only approach one can take. You could hook into the internals \
+of the classifiers and study their internal state to detect when you think \
+they are in an errorful state. This characterizes most self-assessment work \
+published today - build some detailed algorithm that exploits your knowledge \
+of the way the classifier/AI algorithm does decisions. This works but it has \
+many costs:
+- The development of the scientific basis for using internal states of your \
+judges to determine the truthiness of their decisions.
+- The inability to generalize your approach to the internal states of other, \
+widely different, classifiers.
+- The additional computational burden of memory and time to compute the \
+wanted ground truth statistic.
+
+Some businesses decide to accept that cost. That explains NNs research into \
+self-assessment by FacebookAI etc.
+
+Our black box approach is poorer in measuring that ground truth statistic (it \
+may require more samples than the internal state approach) but has the \
+advantage of being more universal.  For example, it would allow the inclusion \
+of classifiers for which you do not have or want an internal state \
+representation (a thorny scientific issue!). One important class of such \
+classifiers - humans. In speech recognition the golden standard is human \
+transcriptions. But what happens if the transcriptions have errors? Our \
+approach can answer that question. Internal representation approaches cannot. \
+This is also our critique 
+\
+\>", "Text",
+ CellChangeTimes->{{3.79895227017848*^9, 3.79895307105302*^9}, {
+  3.798957725608017*^9, 
+  3.798957731342255*^9}},ExpressionUUID->"90d6efe1-91d4-48d5-90ef-\
+d6f020726226"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The Two types of sample statistics in our GTI problem", "Subsection",
+ CellChangeTimes->{{3.79895764858563*^9, 3.798957659960816*^9}, {
+  3.798958919790897*^9, 
+  3.7989589238464746`*^9}},ExpressionUUID->"0e2de906-512b-4530-9e1e-\
+d3dd1133cb1b"],
+
+Cell["\<\
+We will be concerned with two types of sample statistics in the data stream \
+of binary classifiers decisions - the observables and the ground truth \
+statistics.
+
+Observables are sample statistics that do not require any knowledge of the \
+ground truth for the decisions. In this case, one observable sample statistic \
+is the percentage of times two classifiers voted (\[Alpha], \[Beta]). For two \
+binary classifiers the event space is then the set of all possible decision \
+patterns - there are four of these, 2^2.
+
+Ground truth statistics are sample statistics that require some knowledge of \
+the unknown ground truth for the decisions. In the case of the binary \
+classifiers, we want to know what percentage of the (\[Alpha], \[Beta]) \
+decisions corresponded to the true label being \[Alpha] or \[Beta]. This \
+would allow us to calculate the accuracy on each label.\
+\>", "Text",
+ CellChangeTimes->{{3.798958928286357*^9, 
+  3.79895921681949*^9}},ExpressionUUID->"71e6c723-ced2-4a2f-9ed9-\
+25d4482bf85d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Two correlated binary classifiers", "Subsection",
+ CellChangeTimes->{{3.798952235460368*^9, 
+  3.798952241044025*^9}},ExpressionUUID->"7fa2a4e7-69c4-415f-965d-\
+86c4eb48e010"],
+
+Cell["\<\
+The sample statistics space for the decisions of two binary classifiers is \
+then encapsulated in this exact polynomial description of the observables \
+(the \[OpenCurlyDoubleQuote]f\[CloseCurlyDoubleQuote]s) in terms of the \
+ground truth statistics (the \[OpenCurlyDoubleQuote]\[Phi]\
+\[CloseCurlyDoubleQuote]s) and
+and the correlations (the \[OpenCurlyDoubleQuote]\[CapitalGamma]\
+\[CloseCurlyDoubleQuote]s between them.\
+\>", "Text",
+ CellChangeTimes->{{3.7989592914846277`*^9, 
+  3.798959430919285*^9}},ExpressionUUID->"3f91f3ee-a044-4b7a-84a5-\
+ba31a816a53e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"exactPolynomialDescription", " ", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["f", 
+      RowBox[{"\[Alpha]", ",", "\[Alpha]"}]], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Alpha]"}]], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+     
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Beta]"}]], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+    RowBox[{
+     SubscriptBox["f", 
+      RowBox[{"\[Alpha]", ",", "\[Beta]"}]], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         SubscriptBox["\[CapitalGamma]", 
+          RowBox[{"1", ",", "2", ",", "\[Alpha]"}]]}], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         SubscriptBox["\[CapitalGamma]", 
+          RowBox[{"1", ",", "2", ",", "\[Beta]"}]]}], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+    
+    RowBox[{
+     SubscriptBox["f", 
+      RowBox[{"\[Beta]", ",", "\[Alpha]"}]], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         SubscriptBox["\[CapitalGamma]", 
+          RowBox[{"1", ",", "2", ",", "\[Alpha]"}]]}], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+     
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         SubscriptBox["\[CapitalGamma]", 
+          RowBox[{"1", ",", "2", ",", "\[Beta]"}]]}], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+    RowBox[{
+     SubscriptBox["f", 
+      RowBox[{"\[Beta]", ",", "\[Beta]"}]], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Alpha]"}]], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+     RowBox[{
+      SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Beta]"}]], "+", 
+        RowBox[{
+         SubscriptBox["\[Phi]", 
+          RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+         SubscriptBox["\[Phi]", 
+          RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]]}]}], ")"}]}]}]}], 
+   "}"}]}]], "Input",
+ CellChangeTimes->{{3.798959240893938*^9, 3.7989592687720623`*^9}},
+ CellLabel->
+  "In[292]:=",ExpressionUUID->"08968529-de96-4de2-acb7-4d75e87e3fbc"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Alpha]"}]], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalGamma]", 
+        RowBox[{"1", ",", "2", ",", "\[Alpha]"}]], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalGamma]", 
+        RowBox[{"1", ",", "2", ",", "\[Beta]"}]], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+   
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Alpha]", ",", "\[Beta]"}]], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Alpha]"}]]}], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Alpha]", ",", "\[Alpha]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Beta]"}]]}], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Alpha]", ",", "\[Beta]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Alpha]"}]], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Alpha]"}]]}], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Alpha]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        SubscriptBox["\[CapitalGamma]", 
+         RowBox[{"1", ",", "2", ",", "\[Beta]"}]]}], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Alpha]", ",", "\[Beta]"}]]}]}], ")"}]}]}], ",", 
+   
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"\[Beta]", ",", "\[Beta]"}]], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Alpha]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalGamma]", 
+        RowBox[{"1", ",", "2", ",", "\[Alpha]"}]], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Beta]", ",", "\[Alpha]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Beta]", ",", "\[Alpha]"}]]}]}], ")"}]}], "-", 
+    RowBox[{
+     SubscriptBox["\[Phi]", "\[Beta]"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalGamma]", 
+        RowBox[{"1", ",", "2", ",", "\[Beta]"}]], "+", 
+       RowBox[{
+        SubscriptBox["\[Phi]", 
+         RowBox[{"1", ",", "\[Beta]", ",", "\[Beta]"}]], " ", 
+        SubscriptBox["\[Phi]", 
+         RowBox[{"2", ",", "\[Beta]", ",", "\[Beta]"}]]}]}], ")"}]}]}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.798959255565691*^9, 3.79895926982822*^9}},
+ CellLabel->
+  "Out[292]=",ExpressionUUID->"6345d083-fe1e-41c3-b1d1-716f9fd6a93d"]
+}, Open  ]],
+
+Cell["\<\
+Note the \[OpenCurlyDoubleQuote]chicken-and-egg\[CloseCurlyDoubleQuote] \
+problem of self-assessment. These polynomials do not factor (an algebraic \
+claim that can be proven or disproven). One class of \[Phi] variables is \
+completely environmental (the prevalence of the true labels in the sample \
+being analyzed). The other class is the instrument\[CloseCurlyQuote]s \
+marginal performance in that same sample.
+
+This chicken-and-egg nature of self-assessment results in a much deeper \
+realization. The boundary between experimental and environmental error may be \
+theoretically definable by your model of the world but it can never be made \
+infinitely thin by any experimental set-up you use to explore it. You can \
+engineer better and better measuring protocols to make the boundary as thin \
+as you want - but it is impossible to resolve it infinitely sharp. A small \
+insight about the deficiency of empirical measurements to fully resolve all \
+theoretical claims - that the boundary between the machine and the experiment \
+exists EXACTLY where you say it is. Like all of science we can only be left \
+with a very small uncertainty of our theoretical assertions.\
+\>", "Text",
+ CellChangeTimes->{{3.798959434633438*^9, 
+  3.7989598545207367`*^9}},ExpressionUUID->"993438fa-5cd5-4f9c-8538-\
+787fc6795de4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The size of this sample statistic space", "Subsection",
+ CellChangeTimes->{{3.798959879649025*^9, 
+  3.798959885352324*^9}},ExpressionUUID->"626a18ab-0e08-4065-88af-\
+b1f28ee2ac2d"],
+
+Cell["\<\
+If we treat the observables as coefficients, we can count in this case what \
+the dimensionality of the space is. It is 2 + 2*4 + 2 =  12. By utilizing the \
+logical relations between some of these statistics - e.g. the prevalences \
+must sum to one - we can reduce the dimensionality of the polynomial system \
+to 7.\
+\>", "Text",
+ CellChangeTimes->{{3.798959889794901*^9, 
+  3.798960096007732*^9}},ExpressionUUID->"1566e4c8-3261-4228-bf40-\
+2e352cfc35b4"]
+}, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
@@ -141,9 +523,31 @@ Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 239, 6, 222, "Title",ExpressionUUID->"e4de7bfc-614d-457d-a3e7-c60a97e12bb3"],
 Cell[822, 30, 3537, 58, 817, "Text",ExpressionUUID->"64a85e73-97fc-4574-956c-0f45b7f4bf4b"],
+Cell[4362, 90, 185, 3, 67, "Section",ExpressionUUID->"dbd25bdc-5c86-400b-b852-1409abadf8fb"],
 Cell[CellGroupData[{
-Cell[4384, 92, 228, 5, 105, "Section",ExpressionUUID->"d0f07a1d-6a04-44d3-86f0-bb7fe63cd8d4"],
-Cell[4615, 99, 1184, 20, 242, "Text",ExpressionUUID->"87398277-b7b9-45f5-a978-d5997ddfe61e"]
+Cell[4572, 97, 228, 5, 91, "Section",ExpressionUUID->"d0f07a1d-6a04-44d3-86f0-bb7fe63cd8d4"],
+Cell[4803, 104, 1184, 20, 242, "Text",ExpressionUUID->"87398277-b7b9-45f5-a978-d5997ddfe61e"],
+Cell[CellGroupData[{
+Cell[6012, 128, 261, 6, 81, "Subsection",ExpressionUUID->"1418a176-9638-41d4-a0d3-d16b15259ec8"],
+Cell[6276, 136, 2118, 38, 564, "Text",ExpressionUUID->"90d6efe1-91d4-48d5-90ef-d6f020726226"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8431, 179, 251, 4, 54, "Subsection",ExpressionUUID->"0e2de906-512b-4530-9e1e-d3dd1133cb1b"],
+Cell[8685, 185, 1025, 19, 242, "Text",ExpressionUUID->"71e6c723-ced2-4a2f-9ed9-25d4482bf85d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9747, 209, 181, 3, 54, "Subsection",ExpressionUUID->"7fa2a4e7-69c4-415f-965d-86c4eb48e010"],
+Cell[9931, 214, 575, 11, 81, "Text",ExpressionUUID->"3f91f3ee-a044-4b7a-84a5-ba31a816a53e"],
+Cell[CellGroupData[{
+Cell[10531, 229, 4118, 114, 123, "Input",ExpressionUUID->"08968529-de96-4de2-acb7-4d75e87e3fbc"],
+Cell[14652, 345, 3948, 112, 106, "Output",ExpressionUUID->"6345d083-fe1e-41c3-b1d1-716f9fd6a93d"]
+}, Open  ]],
+Cell[18615, 460, 1327, 21, 288, "Text",ExpressionUUID->"993438fa-5cd5-4f9c-8538-787fc6795de4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19979, 486, 187, 3, 54, "Subsection",ExpressionUUID->"626a18ab-0e08-4065-88af-b1f28ee2ac2d"],
+Cell[20169, 491, 467, 9, 81, "Text",ExpressionUUID->"1566e4c8-3261-4228-bf40-2e352cfc35b4"]
+}, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }
