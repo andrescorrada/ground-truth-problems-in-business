@@ -1,0 +1,152 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6521,        144]
+NotebookOptionsPosition[      5827,        123]
+NotebookOutlinePosition[      6222,        139]
+CellTagsIndexPosition[      6179,        136]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Sample statistics space for self-assessment algorithms without ground truth \
+is finite\
+\>", "Title",
+ CellChangeTimes->{{3.79894987532859*^9, 
+  3.7989499017309637`*^9}},ExpressionUUID->"e4de7bfc-614d-457d-a3e7-\
+c60a97e12bb3"],
+
+Cell["\<\
+A huge barrier to the progress of science is our ignorance of the size of the \
+\[OpenCurlyDoubleQuote]true\[CloseCurlyDoubleQuote] model\[CloseCurlyQuote]s \
+parameter space. Thus, no one can tell immediately if our proposed \
+explanation for a phenomena is too complicated by having too many variables, \
+or too simplistic by not having enough. 
+
+The space of variables needed to explain a finite sample in a data stream is \
+not like that at all. It is both finite-dimensional and we can compute its \
+size immediately by enumerating all statistics that we would need to \
+exhaustively describe the statistics you want on a given portion of the data \
+stream.
+
+We demonstrate this claim by trying to write the EXACT polynomial system that \
+describes all possible decision frequencies for an ensemble of arbitrarily \
+correlated binary classifiers. This specificity is essential to the argument. \
+There are gazillions of sample statistics that may be of interest to the \
+user. For each set they define, a different polynomial system would be \
+created and it would have a different dimension. But - whatever that value is \
+- it is finite and allows for an exact polynomial description.
+
+Note the Faustian bargain here. We gain a huge \
+\[OpenCurlyDoubleQuote]theoretical\[CloseCurlyDoubleQuote] advantage in \
+describing the metrology of some unknown ground truth statistics. But our \
+metrological labor is then multiplied by the fact that many such sample \
+statistics are possible for any sample of the data stream of a natural \
+phenomena. This is, understandably, not attractive to scientists. But to the \
+engineer or industrial scientist it is because it allows some clarity when we \
+seek a few ground truth statistics so we can monitor AI systems in production \
+or robots we want to build.
+
+An example from our work in Speech Recognition -I was a member of the \
+research team that helped produce the 1st commercial continuous speech \
+recognition, Dragon Naturally Speaking - elucidates this industrial \
+mathematician/scientist insight. Developing Naturally Speaking or when people \
+report on speech recognizers in the literature one ground truth statistic is \
+used above all others - Word Error Rate (WER). WER is a sample statistic - \
+your average recognition error over the speech sample you transcribe with \
+your recognizer.
+
+Note that WER is not exhaustive as a descriptor of all possible sample \
+statistics related to the performance of a speech recognizer over a finite \
+sample of speech. We could get more detailed knowledge of the error modes of \
+the recognizer by asking more detailed error statistics on the sample. How \
+many times was \[OpenCurlyDoubleQuote]foo\[CloseCurlyDoubleQuote] correctly \
+recognized? Or \[OpenCurlyDoubleQuote]bar\[CloseCurlyDoubleQuote]? How many \
+times was \[OpenCurlyDoubleQuote]foo\[CloseCurlyDoubleQuote] transcribed as \
+\[OpenCurlyDoubleQuote]bar\[CloseCurlyDoubleQuote]? And so on.
+
+The crucial point for the industrial mathematician/scientist - nobody cares \
+about that detailed error knowledge in your industry. All research decisions, \
+all management decisions in any particular technology business are usually \
+driven by a very small set of sample statistics. In Speech Recognition WER is \
+that statistic.\
+\>", "Text",
+ CellChangeTimes->{{3.7989499967010937`*^9, 3.798950384586775*^9}, {
+  3.798950419040599*^9, 3.798951353920348*^9}, {3.7989513903577747`*^9, 
+  3.7989514031439447`*^9}},ExpressionUUID->"64a85e73-97fc-4574-956c-\
+0f45b7f4bf4b"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The size of the sample statistics space for monitoring binary classifiers\
+\>", "Section",
+ CellChangeTimes->{{3.798951407055277*^9, 
+  3.7989514230865498`*^9}},ExpressionUUID->"d0f07a1d-6a04-44d3-86f0-\
+bb7fe63cd8d4"],
+
+Cell["\<\
+Now suppose that you are an industrial scientist that has deployed a bank of \
+binary classifiers to be used as one small component of an industrial data \
+pipeline. How do you monitor the quality of their decisions when you don\
+\[CloseCurlyQuote]t know the true labels for their decisions? You don\
+\[CloseCurlyQuote]t have the true labels because if you did - why did you \
+deploy noisy classifiers to get them?
+
+This is a crucial business insight for an industrial scientist.  Companies \
+today may have tons of data, but ground truth on that data is the scarcest \
+commodity! Why? Because if it wasn\[CloseCurlyQuote]t, why is your company \
+running AI algorithms over the data? The most important ground truth is \
+missing - the one relevant to the business bottom line. This makes ground \
+truth inference algorithms on that unknown ground truth very valuable in the \
+very narrow context of your business goals. It is not pretty science, but it \
+is valuable engineering.\
+\>", "Text",
+ CellChangeTimes->{{3.7989515033293447`*^9, 3.798951728996728*^9}, {
+  3.7989517794670877`*^9, 
+  3.7989519399552507`*^9}},ExpressionUUID->"87398277-b7b9-45f5-a978-\
+d5997ddfe61e"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 686},
+WindowMargins->{{Automatic, 210}, {27, Automatic}},
+FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (March 18, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"bc0543e7-5171-44c2-b5ef-a10a5187b0d8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 239, 6, 222, "Title",ExpressionUUID->"e4de7bfc-614d-457d-a3e7-c60a97e12bb3"],
+Cell[822, 30, 3537, 58, 817, "Text",ExpressionUUID->"64a85e73-97fc-4574-956c-0f45b7f4bf4b"],
+Cell[CellGroupData[{
+Cell[4384, 92, 228, 5, 105, "Section",ExpressionUUID->"d0f07a1d-6a04-44d3-86f0-bb7fe63cd8d4"],
+Cell[4615, 99, 1184, 20, 242, "Text",ExpressionUUID->"87398277-b7b9-45f5-a978-d5997ddfe61e"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
