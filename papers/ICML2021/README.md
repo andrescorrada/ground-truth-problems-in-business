@@ -1,5 +1,5 @@
 # ICML 2021 Submission Paper and Final Reviews
-![Results on the synthetic dataset twonorm](./icml2021-twonorm.png)
+[Results on the synthetic dataset twonorm](./icml2021-twonorm.png)
 This folder contains the submission for the International Conference
 in Machine Learning (ICML) 2021. The paper explains how algebraic
 ground truth inference (algebraic GTI) can be used to measure the
@@ -12,7 +12,7 @@ underlying algebraic GTI - algebraic geometry. This in an honest, critical
 review. I cannot say the same thing about the other three reviewers. They
 clearly did not understand the math behind the paper and seem, all three,
 to suffer from the 
-![Kunning-Drugger Effect](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect).
+[Kunning-Drugger Effect](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect).
 
 To support that opinion, consider the universal criticism of the three
 sub-standard reviewers that "this only works binary classification"!
@@ -38,4 +38,4 @@ After the NIPS 2020 rejection, I resolved to move on to other conferences and
 not repeat the papers but continue evolving the idea and finding new results.
 That resolution has paid off. It is clear that ML conferences are not the venue
 were this work will be accepted. So a manuscript submission for the SIAM journal of Mathematics Of Data Science is next. You can find some of the Mathematica notebook supplements that allow you to reproduce the results
-in the paper ![here](../SIMODS).
+in the paper [here](../SIMODS).
