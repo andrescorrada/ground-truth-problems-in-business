@@ -1,5 +1,6 @@
 # ICML 2021 Submission Paper and Final Reviews
-[Results on the synthetic dataset twonorm](./icml2021-twonorm.png)
+![Results on the synthetic dataset twonorm](./icml2021-twonorm.png)
+
 This folder contains the submission for the International Conference
 in Machine Learning (ICML) 2021. The paper explains how algebraic
 ground truth inference (algebraic GTI) can be used to measure the
