@@ -16,7 +16,7 @@ to suffer from the
 [Kunning-Drugger Effect](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect).
 
 To support that opinion, consider the universal criticism of the three
-sub-standard reviewers that "this only works binary classification"!
+sub-standard reviewers that "this only works for binary classification"!
 They clearly did not understand the math and missed that this exact same
 algebraic approach can be applied to any classification task with a finite
 number of labels. But besides being a huge misconception of the generality
@@ -33,7 +33,9 @@ This paper completes a cycle of three papers I have written by myself and with
 others during this pandemic year. All three (NIPS 2020, AISTATS 2021 and ICML 2021) were rejected. These rejections have greatly improved the idea in spite
 of universally bad reviewers (NIPS 2020 was the worst). Personal correspondence
 with Boaz Nadler and others, plus reviewer \#2 on this paper, have helped
-me place this work better in relation to that of others.
+me to better place this work in relation to that of others. The primary feature
+distinguishing this work (which dates to a 2010 patent!) is that it evaluates
+classifiers without any probability theory.
 
 After the NIPS 2020 rejection, I resolved to move on to other conferences and
 not repeat the papers but continue evolving the idea and finding new results.
