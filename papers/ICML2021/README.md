@@ -31,7 +31,7 @@ only solve certain problems is theoretical hypocrisy at its best.
 
 This paper completes a cycle of three papers I have written by myself and with
 others during this pandemic year. All three (NIPS 2020, AISTATS 2021 and ICML 2021) were rejected. These rejections have greatly improved the idea in spite
-of universally bad reviewers (NIPS 2020 was the worst). Personal correspondence
+of universally bad reviewers (NeurIPS 2020 was the worst). Personal correspondence
 with Boaz Nadler and others, plus reviewer \#2 on this paper, have helped
 me to better place this work in relation to that of others. The primary feature
 distinguishing this work (which dates to a 2010 patent!) is that it evaluates
