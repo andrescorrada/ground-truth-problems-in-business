@@ -15,14 +15,21 @@ judges.
 
 The safety engineer and the philosopher face the same "last mile verification" problem.
 They must both evaluate noisy judges without the benefit of the ground truth. GroundSeer(tm)
-is one way to mitigate this problem. It is one example of a class of algorithms that need much more research - algebraic evaluators of noisy AI judges. Our submission
+is one way to mitigate this problem. The main app in this submission is MappingYourAIAlarm.nb.
+Our submission
 is also a call to the curious inventors of the World to explore this "new" approach.
 
 The resources in this repository should allow anyone in the World curious about algebra and
 AI safety to explore this approach. The core of that exploration is an initial app -
-MappingYourAIAlarm.nb. All the code in this repository is written in Mathematica. This
+MappingYourAIAlarm.nb that shows one of the many advantages of distribution-free evaluators.
+They can alarm on their own failure. This makes them useful for AI safety. Their use
+of algebraic, not real numbers, gives them an important edge over evaluators that use
+probability distributions. Using an understanding this app will help clarify the advantages
+and limitations of our approach.
+
+All the code in this repository is written in Mathematica. This
 platform for the Wolfram Language is perfect for our task. Mathematica neatly integrates
-the data, programming and algebraic aspects of our new way for evaluating noisy AI judges.
+the data, programming and algebraic aspects of this new way for evaluating noisy AI judges.
 Anybody with access to a RaspberryPi can execute and experiment with this code. We hope
 they do.
 
