@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    621664,      10238]
-NotebookOptionsPosition[    620706,      10212]
-NotebookOutlinePosition[    621133,      10229]
-CellTagsIndexPosition[    621090,      10226]
+NotebookDataLength[    623381,      10291]
+NotebookOptionsPosition[    621899,      10253]
+NotebookOutlinePosition[    622380,      10272]
+CellTagsIndexPosition[    622337,      10269]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -45,6 +45,8 @@ Cell["Resources", "Section",
   3.870421831579215*^9}},ExpressionUUID->"108236ff-b55f-4a09-9b3b-\
 a212fa64ee49"],
 
+Cell[CellGroupData[{
+
 Cell["Getting and installing the Raspberry Pi", "Subsection",
  CellChangeTimes->{{3.8704218390295773`*^9, 
   3.87042185246873*^9}},ExpressionUUID->"3a28a0ce-bddb-4bf5-9087-\
@@ -52,10 +54,49 @@ d758e0ee3fe2"],
 
 Cell[CellGroupData[{
 
+Cell[BoxData[
+ RowBox[{"Hyperlink", "@", "\"\<https://www.raspberrypi.org/\>\""}]], "Input",\
+
+ CellChangeTimes->{{3.870664421424039*^9, 3.8706644214287*^9}, {
+  3.870664506149132*^9, 3.870664517360055*^9}},
+ CellLabel->
+  "In[2240]:=",ExpressionUUID->"1838cc88-34aa-4027-95ae-1295723b5860"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "\"https://www.raspberrypi.org/\"", "https://www.raspberrypi.org/"},
+  "HyperlinkURL"]], "Output",
+ CellChangeTimes->{3.870664522496029*^9},
+ CellLabel->
+  "Out[2240]=",ExpressionUUID->"ad113d02-1fd5-4320-8625-6df8a66c507f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["Getting and installing Mathematica on your Raspberry Pi", "Subsection",
  CellChangeTimes->{{3.8704218585123034`*^9, 
   3.870421870524194*^9}},ExpressionUUID->"0783b7f2-3d33-4140-809b-\
 0d4d2d98d5d2"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Hyperlink", "@", 
+  "\"\<https://www.wolfram.com/raspberry-pi/\>\""}]], "Input",
+ CellChangeTimes->{{3.870664581997113*^9, 3.870664586661566*^9}},
+ CellLabel->
+  "In[2241]:=",ExpressionUUID->"26295c89-999a-4051-9580-50509b054d95"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "\"https://www.wolfram.com/raspberry-pi/\"", 
+   "https://www.wolfram.com/raspberry-pi/"},
+  "HyperlinkURL"]], "Output",
+ CellChangeTimes->{3.8706645879708767`*^9},
+ CellLabel->
+  "Out[2241]=",ExpressionUUID->"68397c05-9390-4280-bf54-b17b51974a68"]
+}, Open  ]],
 
 Cell[BoxData[
  GraphicsBox[
@@ -10212,6 +10253,8 @@ qU8/i/HLK1B74AO+vP4LRImeGA==
 },
 WindowSize->{1126, 901},
 WindowMargins->{{20, Automatic}, {21, Automatic}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
 Magnification:>1.5 Inherited,
 FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (February 4, 2022)",
 StyleDefinitions->"Default.nb",
@@ -10233,10 +10276,20 @@ Cell[580, 22, 176, 3, 146, "Title",ExpressionUUID->"1048f224-1861-4dd9-886e-84db
 Cell[759, 27, 606, 11, 157, "Text",ExpressionUUID->"d6b8d5f3-51b4-4450-b895-af4853fb519c"],
 Cell[CellGroupData[{
 Cell[1390, 42, 156, 3, 101, "Section",ExpressionUUID->"108236ff-b55f-4a09-9b3b-a212fa64ee49"],
-Cell[1549, 47, 188, 3, 81, "Subsection",ExpressionUUID->"3a28a0ce-bddb-4bf5-9087-d758e0ee3fe2"],
 Cell[CellGroupData[{
-Cell[1762, 54, 205, 3, 55, "Subsection",ExpressionUUID->"0783b7f2-3d33-4140-809b-0d4d2d98d5d2"],
-Cell[1970, 59, 618696, 10148, 602, "Input",ExpressionUUID->"a288b0f6-93b9-4c1d-bc14-4d6e3ab91278"]
+Cell[1571, 49, 188, 3, 81, "Subsection",ExpressionUUID->"3a28a0ce-bddb-4bf5-9087-d758e0ee3fe2"],
+Cell[CellGroupData[{
+Cell[1784, 56, 291, 6, 63, "Input",ExpressionUUID->"1838cc88-34aa-4027-95ae-1295723b5860"],
+Cell[2078, 64, 255, 6, 71, "Output",ExpressionUUID->"ad113d02-1fd5-4320-8625-6df8a66c507f"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2382, 76, 205, 3, 81, "Subsection",ExpressionUUID->"0783b7f2-3d33-4140-809b-0d4d2d98d5d2"],
+Cell[CellGroupData[{
+Cell[2612, 83, 254, 5, 63, "Input",ExpressionUUID->"26295c89-999a-4051-9580-50509b054d95"],
+Cell[2869, 90, 279, 7, 88, "Output",ExpressionUUID->"68397c05-9390-4280-bf54-b17b51974a68"]
+}, Open  ]],
+Cell[3163, 100, 618696, 10148, 602, "Input",ExpressionUUID->"a288b0f6-93b9-4c1d-bc14-4d6e3ab91278"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
