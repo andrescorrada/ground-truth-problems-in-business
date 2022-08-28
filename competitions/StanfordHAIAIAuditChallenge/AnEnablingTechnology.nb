@@ -1,0 +1,228 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8828,        220]
+NotebookOptionsPosition[      6888,        179]
+NotebookOutlinePosition[      7315,        196]
+CellTagsIndexPosition[      7272,        193]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["An Enabling Technology", "Title",
+ CellChangeTimes->{{3.870419228724147*^9, 
+  3.870419236741494*^9}},ExpressionUUID->"2bf084ac-b82f-4f6f-bfdc-\
+97f24710e1d2"],
+
+Cell["\<\
+Evaluators like the independent trio evaluator can enable many applications \
+that can increase the safety and fairness of AI systems. This notebooks \
+explores some of them and gives suggestions for possible experiments to carry \
+out.\
+\>", "Text",
+ CellChangeTimes->{{3.8704192488339033`*^9, 
+  3.870419348980008*^9}},ExpressionUUID->"c5793477-1d2f-43c0-8054-\
+dcadbc170a7f"],
+
+Cell[CellGroupData[{
+
+Cell["Auto-ML", "Section",
+ CellChangeTimes->{{3.870419415065234*^9, 
+  3.870419419130657*^9}},ExpressionUUID->"d80b9efa-8cbf-468b-83e5-\
+f7ce8ab93566"],
+
+Cell["\<\
+The vast majority of data that an AI system will process is unlabeled. \
+Otherwise, why was the AI used? Can we leverage that unlabeled data somehow? \
+Could we devise protocols that can train good models using unlabeled data? \
+And can we do this robustly? The experiments in this section explore these \
+questions.\
+\>", "Text",
+ CellChangeTimes->{{3.8704194263428173`*^9, 
+  3.870419603508255*^9}},ExpressionUUID->"dd256733-f784-4d73-8ec8-\
+cb25b4e1c690"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Finding least correlated ensembles on large unlabeled test sets\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.870710552046773*^9, 
+  3.8707105790798798`*^9}},ExpressionUUID->"cbd2ea44-d894-4551-a7f5-\
+81c14d2916af"],
+
+Cell["\<\
+The problem of correlated classifiers is the Achilles heel of algebraic \
+evaluators. This presents the engineer of robust AI systems  that uses them \
+with a challenge - how do we build ensembles of classifiers that are, as best \
+we can, independently correlated in their errors on a large unlabeled test \
+set? We use the failures of the independent trio formula to reject possible \
+candidates. Here are some suggestions on what sort of scans you could do
+to see how well this works on the data and the classifiers of interest to you.\
+\>", "Text",
+ CellChangeTimes->{{3.87071059173975*^9, 
+  3.870710909108316*^9}},ExpressionUUID->"47b41ef7-f703-4487-9f97-\
+97e42aed241f"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+We expect classifiers trained differently to perform differently. Thus \
+differences in training decorrelate their errors also. By training on \
+disjoint sets of data, features, or algorithms you can get pair error \
+correlations in the order of 5% or less. Carry out training protocols that \
+scan for the most independent classifier ensembles by discarding the ones \
+that make the evaluator fail.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.8707109501452303`*^9, 
+  3.870711177436925*^9}},ExpressionUUID->"d93054fa-6da0-4605-a9db-\
+85a7493b5803"],
+
+Cell["\<\
+Are there bounds on the correlations observed in the selected ones?\
+\>", "SubitemNumbered",
+ CellChangeTimes->{{3.8707109501452303`*^9, 
+  3.870711205906043*^9}},ExpressionUUID->"adaac6b5-b7b3-49ca-977f-\
+ffa04b1eacc0"],
+
+Cell["\<\
+What about the rejected ones? Were good configurations rejected? What was the \
+least error correlation that triggered the rejection? Is there a difference \
+between failures that resulted in real algebraic numbers versus those that \
+gave imaginary algebraic numbers?\
+\>", "SubitemNumbered",
+ CellChangeTimes->{{3.8707109501452303`*^9, 
+  3.870711348794435*^9}},ExpressionUUID->"2baadf67-07c0-4c6d-9302-\
+1ee4d2341659"],
+
+Cell["\<\
+Now measure the error in the evaluation estimates of the accepted \
+configurations. Compare that to the error in the rejected ones. \
+\>", "SubitemNumbered",
+ CellChangeTimes->{{3.8707109501452303`*^9, 
+  3.87071149348573*^9}},ExpressionUUID->"5d628b60-9b55-4b0f-9a23-\
+41a7ff40e974"],
+
+Cell["\<\
+Also compare it to various other random guessing that would be sensible - a \
+real number between 0 and 1. These random guessers are good proxies for \
+having no information except the one that you need to make in order to decode \
+the multiple answers given by algebraic evaluators. For example, the \
+comparison we made between the evaluator and ground truth in \
+TheCoreTheorem.nb was based on picking the one based on our side knowledge \
+about the value of the true prevalence. For binary classification this means \
+that a fair comparison with random performers would mean that you guess a \
+value of the prevalence with a width specified by your side knowledge. In our \
+case, random guessing on the 0 to 1/2 interval.\
+\>", "SubitemNumbered",
+ CellChangeTimes->{{3.8707109501452303`*^9, 3.870711504682041*^9}, {
+  3.870711538259502*^9, 
+  3.870711811724036*^9}},ExpressionUUID->"4025b159-b23c-436b-9750-\
+86b73e27da7c"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fairness Alarms", "Section",
+ CellChangeTimes->{{3.870419626623508*^9, 
+  3.870419637682036*^9}},ExpressionUUID->"899e9430-2ad3-4ee7-a733-\
+764d8aac9ddf"],
+
+Cell["\<\
+Different methods for ameliorating the harm of biased AI systems have been \
+proposed and criticized. Common to some of them, is the use of purely \
+observational statistics like false positives, etc. But how do we know that a \
+system that was designed for X measure of fairness is actually working on \
+unlabeled data? The experiment in this section suggests one possible way to \
+use the independent trio evaluator to help with this problem.\
+\>", "Text",
+ CellChangeTimes->{{3.8704196530998917`*^9, 3.870419849691124*^9}, {
+  3.87071182745879*^9, 
+  3.870711829553699*^9}},ExpressionUUID->"4b07fa6c-ef39-43cc-aa70-\
+74de8578e81b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Error-Correction Codes", "Section",
+ CellChangeTimes->{{3.87041986255299*^9, 
+  3.870419868387034*^9}},ExpressionUUID->"19d559e9-4d8e-4f59-bf6d-\
+9789a4ff8ebc"],
+
+Cell["\<\
+Hamming famously quipped - \[OpenCurlyDoubleQuote]Damn it, if the computer \
+knows I am wrong, why can\[CloseCurlyQuote]t it fix it?\
+\[CloseCurlyDoubleQuote] He went on to invent error correcting codes. What \
+error-correcting codes can you invent with the independent trio evaluator? \
+Here we propose one way to build a code to help you get going with your own \
+ideas.\
+\>", "Text",
+ CellChangeTimes->{{3.870419875566077*^9, 3.870419961810975*^9}, {
+  3.8704199955221024`*^9, 
+  3.8704200253428097`*^9}},ExpressionUUID->"35597c8c-a4ae-494e-9998-\
+936a79554608"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1016, 920},
+WindowMargins->{{12, Automatic}, {22, Automatic}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (February 4, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"b1746174-a414-4214-ab36-62fcc1477d99"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 165, 3, 146, "Title",ExpressionUUID->"2bf084ac-b82f-4f6f-bfdc-97f24710e1d2"],
+Cell[748, 27, 388, 8, 122, "Text",ExpressionUUID->"c5793477-1d2f-43c0-8054-dcadbc170a7f"],
+Cell[CellGroupData[{
+Cell[1161, 39, 152, 3, 101, "Section",ExpressionUUID->"d80b9efa-8cbf-468b-83e5-f7ce8ab93566"],
+Cell[1316, 44, 468, 9, 157, "Text",ExpressionUUID->"dd256733-f784-4d73-8ec8-cb25b4e1c690"],
+Cell[CellGroupData[{
+Cell[1809, 57, 224, 5, 67, "Subsubsection",ExpressionUUID->"cbd2ea44-d894-4551-a7f5-81c14d2916af"],
+Cell[2036, 64, 687, 11, 226, "Text",ExpressionUUID->"47b41ef7-f703-4487-9f97-97e42aed241f"],
+Cell[CellGroupData[{
+Cell[2748, 79, 559, 10, 174, "ItemNumbered",ExpressionUUID->"d93054fa-6da0-4605-a9db-85a7493b5803"],
+Cell[3310, 91, 230, 5, 39, "SubitemNumbered",ExpressionUUID->"adaac6b5-b7b3-49ca-977f-ffa04b1eacc0"],
+Cell[3543, 98, 431, 8, 96, "SubitemNumbered",ExpressionUUID->"2baadf67-07c0-4c6d-9302-1ee4d2341659"],
+Cell[3977, 108, 294, 6, 68, "SubitemNumbered",ExpressionUUID->"5d628b60-9b55-4b0f-9a23-41a7ff40e974"],
+Cell[4274, 116, 937, 15, 267, "SubitemNumbered",ExpressionUUID->"4025b159-b23c-436b-9750-86b73e27da7c"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5272, 138, 160, 3, 101, "Section",ExpressionUUID->"899e9430-2ad3-4ee7-a733-764d8aac9ddf"],
+Cell[5435, 143, 644, 11, 191, "Text",ExpressionUUID->"4b07fa6c-ef39-43cc-aa70-74de8578e81b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6116, 159, 166, 3, 101, "Section",ExpressionUUID->"19d559e9-4d8e-4f59-bf6d-9789a4ff8ebc"],
+Cell[6285, 164, 575, 11, 157, "Text",ExpressionUUID->"35597c8c-a4ae-494e-9998-936a79554608"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
