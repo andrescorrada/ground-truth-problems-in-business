@@ -36,5 +36,33 @@ hope you can take them further.
 ## The role of distribution-free evaluators of noisy AI judges in AI safety and monitoring
 
 ### Robust to out-of-distribution shifts between training and deployment.
+
+An immediately obvious of having algebraic evaluators is that the problem of out-of-distribution
+shifts is side-stepped. No assumptions are made about distributions so shifts in them are not
+directly relevant to their execution. But this does not make algebraic evaluators immune to
+environmental shifts. They are not robust to environmental changes that make the classifiers
+themselves error correlated on the test sample. This raises an AI safety paradox. The
+algebraic nature of the solution gives us a way to mitigate this safety failure.
+
 ### Able to alarm on the failure of their own evaluation assumptions.
+
+The algebraic evaluator that forms the core of our submission is a deterministic function
+that produces algebraic numbers. It has one big Achilles heel - it only works correctly on
+binary classifiers that are error independent in the sample. This "bug" is a safety "feature."
+The apperance of out of bounds or imaginary numbers in the output of the evaluator would be
+an immediate signal that the evaluator's independence assumptions are horribly wrong. This is
+useful.
+
 ### Accessible even to highly motivated high school students.
+
+The mathematics used in the AI thermometer in this submission comes from Algebraic Geometry.
+A well known and respected textbook on the subject for undergraduates was written by Cox, Little
+and O'Shea. It is now in its 4th edition. It is not inconceivable that its theorems are within
+the reach of highly motivated high school algebra students.
+
+But understanding Algebraic Geometry is not a barrier to using and experimenting with
+the AI thermometer. A quick perusal of the code and its small number of code lines should
+convince the curious reader that they can quickly build their own experimental uses.
+
+Wolfram and Raspberry Pi extend further the possible audience of young researchers and
+inventors that can play with these ideas.
