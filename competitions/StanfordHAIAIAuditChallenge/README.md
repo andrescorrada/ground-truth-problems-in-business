@@ -44,7 +44,7 @@ environmental shifts. They are not robust to environmental changes that make the
 themselves error correlated on the test sample. This raises an AI safety paradox. The
 algebraic nature of the solution gives us a way to mitigate this safety failure.
 
-### Able to alarm on the failure of their own evaluation assumptions.
+### Algebraic outputs can help alarm when evaluation assumptions are wrong.
 
 The algebraic evaluator that forms the core of our submission is a deterministic function
 that produces algebraic numbers. It has one big Achilles heel - it only works correctly on
