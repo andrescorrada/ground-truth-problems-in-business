@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      8933,        223]
-NotebookOptionsPosition[      6941,        180]
-NotebookOutlinePosition[      7421,        199]
-CellTagsIndexPosition[      7378,        196]
+NotebookDataLength[     15062,        346]
+NotebookOptionsPosition[     12523,        296]
+NotebookOutlinePosition[     13003,        315]
+CellTagsIndexPosition[     12960,        312]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -153,7 +153,51 @@ use the independent trio evaluator to help with this problem.\
  CellChangeTimes->{{3.8704196530998917`*^9, 3.870419849691124*^9}, {
   3.87071182745879*^9, 
   3.870711829553699*^9}},ExpressionUUID->"4b07fa6c-ef39-43cc-aa70-\
-74de8578e81b"]
+74de8578e81b"],
+
+Cell["\<\
+Various approaches to creating and measuring the fairness of AI algorithms \
+have been proposed in the scientific literature. There is even some \
+disagreement about whether some approaches are better than others. The \
+experiments proposed here are based on a bias mitigation training strategy \
+by, \
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.870749468501769*^9, 3.8707496133822727`*^9}, {
+  3.870749678246545*^9, 3.870749679486217*^9}, {3.870749873392499*^9, 
+  3.870749873398354*^9}},ExpressionUUID->"d75ef218-daeb-4cb2-825b-\
+75dbfdbc845f"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+\[OpenCurlyDoubleQuote]Contrastive Counterfactual Fairness in Algorithmic \
+Decision-Making\[CloseCurlyDoubleQuote] by Mutlu, Yousefi, and Garibay \
+discusses a way to use counterfactual reasoning ideas from Causal Data \
+Science. They propose an algorithm for augmenting training data to mitigate \
+the bias of AI algorithms. Their approach can be combined with the algebraic \
+evaluators to create a monitor for fairness on unlabeled data.\
+\>", "ItemNumbered",
+ CellChangeTimes->{
+  3.870750114423814*^9, {3.8707503717479467`*^9, 3.870750605295458*^9}, {
+   3.870750960882509*^9, 
+   3.870751040657379*^9}},ExpressionUUID->"4f8c9ee4-94e7-49e1-83b7-\
+915c42bf28a1"],
+
+Cell["\<\
+The UCI Adult dataset was used in their paper. Using the same dataset, \
+implement their data augmentation technique to create fairer AI algorithms. \
+Using the same ideas about AutoML mentioned before, suppose that you \
+constructed a monitoring ensemble that was roughly independent on its test \
+errors. Can you use the accuracy estimates given by the algebraic evaluator \
+for the members of that ensemble to, in turn, estimate their fairness on \
+unlabeled data? What is the estimation error of your fairness thermometer on \
+unlabeled data?\
+\>", "SubitemNumbered",
+ CellChangeTimes->{
+  3.870750114423814*^9, {3.8707503717479467`*^9, 
+   3.870750918971902*^9}},ExpressionUUID->"4bcda486-b026-490c-83da-\
+5ade0999be37"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -163,18 +207,90 @@ Cell["Error-Correction Codes", "Section",
   3.870419868387034*^9}},ExpressionUUID->"19d559e9-4d8e-4f59-bf6d-\
 9789a4ff8ebc"],
 
-Cell["\<\
-Hamming famously quipped - \[OpenCurlyDoubleQuote]Damn it, if the computer \
+Cell[TextData[{
+ "Hamming famously quipped - \[OpenCurlyDoubleQuote]Damn it, if the computer \
 knows I am wrong, why can\[CloseCurlyQuote]t it fix it?\
 \[CloseCurlyDoubleQuote] He went on to invent error correcting codes. What \
 error-correcting codes can you invent with the independent trio evaluator? \
 Here we propose one way to build a code to help you get going with your own \
-ideas.\
-\>", "Text",
+ideas.\n\nThe connection between algebraic evaluators and error-correcting \
+for AI algorithms is as follows. Constructing evaluation ideals for noisy \
+judges relies on the implicit assumption that classification labels allow us \
+to disjointly separate the test set. This means that the following equation \
+is always true by definition,\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{"voting", " ", "pattern"}]], "=", " ", 
+    RowBox[{
+     SubscriptBox["f", 
+      RowBox[{
+      "voting", " ", "pattern", " ", "when", " ", "label", " ", "a", " ", 
+       "was", " ", "correct"}]], "+"}]}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c74a27bc-4701-4f9a-a291-f5ca2881ab5b"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["f", 
+     RowBox[{
+     "voting", " ", "pattern", " ", "when", " ", "label", " ", "b", " ", 
+      "was", " ", "correct"}]], "+", 
+    SubscriptBox["f", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"voting", " ", "pattern", " ", "when", " ", "label"}], " ", 
+       "..."}], "."}]]}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "a36ae783-a0dc-4f73-aa9c-4657475ba64d"],
+ "\nFor binary classification that means the number of instances of a \
+particular voting pattern is a sum of two unknown integers. Each unknown \
+integer tells you the correct number of instances for that label. \
+Error-correcting with this observation follows immediately. For each voting \
+pattern, compute your estimate of the number of instances for each label. \
+Error minimization proceeds by labeling all the instances of the label that \
+gave the smallest count as the other label.\nA quick example illustrates \
+this,\n10 instances of (a,b,a) = (3 when \[OpenCurlyDoubleQuote]a\
+\[CloseCurlyDoubleQuote] was correct) + (7 when \[OpenCurlyDoubleQuote]b\
+\[CloseCurlyDoubleQuote] was correct)\nWe minimize the error in these \
+decisions by then proceeding to label all these instances as actually being \
+\[OpenCurlyDoubleQuote]b\[CloseCurlyDoubleQuote] instances. Note that we \
+picked an example that would give the opposite answer than  ensemble decision \
+algorithm commonly known as \[OpenCurlyDoubleQuote]wisdom of the crowd.\
+\[CloseCurlyDoubleQuote]"
+}], "Text",
  CellChangeTimes->{{3.870419875566077*^9, 3.870419961810975*^9}, {
-  3.8704199955221024`*^9, 
-  3.8704200253428097`*^9}},ExpressionUUID->"35597c8c-a4ae-494e-9998-\
-936a79554608"]
+  3.8704199955221024`*^9, 3.8704200253428097`*^9}, {3.87075110420511*^9, 
+  3.870751237648486*^9}, {3.8707512945715837`*^9, 3.870751601842366*^9}, {
+  3.870751632107531*^9, 
+  3.8707520016108217`*^9}},ExpressionUUID->"35597c8c-a4ae-494e-9998-\
+936a79554608"],
+
+Cell["\<\
+How effective is this error correcting method? Try it out using your \
+monitoring ensemble schemes. How often does it reduce or increase errors when \
+you plot it against some statistic of the ensemble\[CloseCurlyQuote]s error \
+correlations?\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.8707520434498243`*^9, 
+  3.870752181419702*^9}},ExpressionUUID->"df503f03-935b-4712-817a-\
+7774ebc1818c"],
+
+Cell["\<\
+Another approach to error correction is to create as large of a monitoring \
+ensemble as possible and then check for good members to include in the \
+decisioning ensemble. We know from Condorcet\[CloseCurlyQuote]s famous Jury \
+Theorem that better than average independent judges have high odds of \
+returning correct decisions. Using four classifiers allows you to test 6 \
+possible trios for failures of the independent evaluator. Can your deciding \
+ensembles decrease their error by eliminating the estimates from failing \
+trios and just using the decisions from apparently independent ones?\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.8707520434498243`*^9, 
+  3.8707524483448887`*^9}},ExpressionUUID->"df7fb9e0-f9c7-425f-8f8a-\
+51a557a881b8"]
 }, Open  ]]
 }, Open  ]]
 },
@@ -218,11 +334,18 @@ Cell[4327, 117, 937, 15, 182, "SubitemNumbered",ExpressionUUID->"4025b159-b23c-4
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[5325, 139, 160, 3, 101, "Section",ExpressionUUID->"899e9430-2ad3-4ee7-a733-764d8aac9ddf"],
-Cell[5488, 144, 644, 11, 157, "Text",ExpressionUUID->"4b07fa6c-ef39-43cc-aa70-74de8578e81b"]
+Cell[5488, 144, 644, 11, 157, "Text",ExpressionUUID->"4b07fa6c-ef39-43cc-aa70-74de8578e81b"],
+Cell[6135, 157, 556, 10, 111, "ItemNumbered",ExpressionUUID->"d75ef218-daeb-4cb2-825b-75dbfdbc845f"],
+Cell[CellGroupData[{
+Cell[6716, 171, 677, 12, 143, "ItemNumbered",ExpressionUUID->"4f8c9ee4-94e7-49e1-83b7-915c42bf28a1"],
+Cell[7396, 185, 735, 13, 153, "SubitemNumbered",ExpressionUUID->"4bcda486-b026-490c-83da-5ade0999be37"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6169, 160, 166, 3, 101, "Section",ExpressionUUID->"19d559e9-4d8e-4f59-bf6d-9789a4ff8ebc"],
-Cell[6338, 165, 575, 11, 122, "Text",ExpressionUUID->"35597c8c-a4ae-494e-9998-936a79554608"]
+Cell[8180, 204, 166, 3, 101, "Section",ExpressionUUID->"19d559e9-4d8e-4f59-bf6d-9789a4ff8ebc"],
+Cell[8349, 209, 2980, 59, 608, "Text",ExpressionUUID->"35597c8c-a4ae-494e-9998-936a79554608"],
+Cell[11332, 270, 402, 8, 80, "ItemNumbered",ExpressionUUID->"df503f03-935b-4712-817a-7774ebc1818c"],
+Cell[11737, 280, 758, 12, 174, "ItemNumbered",ExpressionUUID->"df7fb9e0-f9c7-425f-8f8a-51a557a881b8"]
 }, Open  ]]
 }, Open  ]]
 }
