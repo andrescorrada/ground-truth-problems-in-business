@@ -37,7 +37,7 @@ hope you can take them further.
 
 ### Robust to out-of-distribution shifts between training and deployment.
 
-An immediately obvious of having algebraic evaluators is that the problem of out-of-distribution
+An immediately advantage of having algebraic evaluators is that the problem of out-of-distribution
 shifts is side-stepped. No assumptions are made about distributions so shifts in them are not
 directly relevant to their execution. But this does not make algebraic evaluators immune to
 environmental shifts. They are not robust to environmental changes that make the classifiers
@@ -49,7 +49,7 @@ algebraic nature of the solution gives us a way to mitigate this safety failure.
 The algebraic evaluator that forms the core of our submission is a deterministic function
 that produces algebraic numbers. It has one big Achilles heel - it only works correctly on
 binary classifiers that are error independent in the sample. This "bug" is a safety "feature."
-The apperance of out of bounds or imaginary numbers in the output of the evaluator would be
+The appearance of out of bounds or imaginary numbers in the output of the evaluator would be
 an immediate signal that the evaluator's independence assumptions are horribly wrong. This is
 useful.
 
