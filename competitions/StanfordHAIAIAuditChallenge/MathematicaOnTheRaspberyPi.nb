@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    623381,      10291]
-NotebookOptionsPosition[    621899,      10253]
-NotebookOutlinePosition[    622380,      10272]
-CellTagsIndexPosition[    622337,      10269]
+NotebookDataLength[    623907,      10302]
+NotebookOptionsPosition[    622332,      10263]
+NotebookOutlinePosition[    622813,      10282]
+CellTagsIndexPosition[    622770,      10279]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -97,6 +97,16 @@ Cell[BoxData[
  CellLabel->
   "Out[2241]=",ExpressionUUID->"68397c05-9390-4280-bf54-b17b51974a68"]
 }, Open  ]],
+
+Cell["\<\
+Note that the original announcement for Mathematica on the Pi implies that \
+RaspbianOs contains it pre-installed. This does not seem to be the case with \
+all the distributions. So download the installation script in the Wolfram \
+site to install it on whatever Pi OS you want.\
+\>", "Text",
+ CellChangeTimes->{{3.870930013896851*^9, 
+  3.8709301288796873`*^9}},ExpressionUUID->"7c922a17-f24e-4616-b08a-\
+11c3cc7247d2"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -10287,9 +10297,10 @@ Cell[CellGroupData[{
 Cell[2382, 76, 205, 3, 81, "Subsection",ExpressionUUID->"0783b7f2-3d33-4140-809b-0d4d2d98d5d2"],
 Cell[CellGroupData[{
 Cell[2612, 83, 254, 5, 63, "Input",ExpressionUUID->"26295c89-999a-4051-9580-50509b054d95"],
-Cell[2869, 90, 279, 7, 88, "Output",ExpressionUUID->"68397c05-9390-4280-bf54-b17b51974a68"]
+Cell[2869, 90, 279, 7, 71, "Output",ExpressionUUID->"68397c05-9390-4280-bf54-b17b51974a68"]
 }, Open  ]],
-Cell[3163, 100, 618696, 10148, 602, "Input",ExpressionUUID->"a288b0f6-93b9-4c1d-bc14-4d6e3ab91278"]
+Cell[3163, 100, 430, 8, 122, "Text",ExpressionUUID->"7c922a17-f24e-4616-b08a-11c3cc7247d2"],
+Cell[3596, 110, 618696, 10148, 602, "Input",ExpressionUUID->"a288b0f6-93b9-4c1d-bc14-4d6e3ab91278"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
